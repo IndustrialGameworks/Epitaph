@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{ 	
+		gameScore = 0;
 		retryButton.gameObject.SetActive (false);
 		quitButton.gameObject.SetActive (false);
 	}

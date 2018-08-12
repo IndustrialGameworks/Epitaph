@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayScript : MonoBehaviour 
 {
+	public GameController game;
+
 		public void startGame()
 		{
 			SceneManager.LoadScene ("Test");
