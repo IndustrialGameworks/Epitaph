@@ -6,13 +6,13 @@ public class lotusProjectile : MonoBehaviour {
 
 	public float projectileSpeed = 10;
 	public float delayBeforeDestroy = 5;
-	public GameObject spawnOrigin; //assigned by instantiator upon instantiation
-	Vector2 currentPosition;
-	Vector2 storedCenterOfMass;
+	public GameObject spawnOrigin; //reference to the instantiator, assigned by instantiator upon instantiation
+	Vector2 currentPosition; //position of this projectile
+	Vector2 storedCenterOfMass; //center of mass of instantiator upon instantiation
 
 	// Use this for initialization
 	void Start () {
-		storedCenterOfMass = spawnOrigin.GetComponent<LotusEnemyController> ().centerOfMass;
+		storedCenterOfMass = spawnOrigin.GetComponent<LotusEnemyController> ().centerOfMass; //gets the center of mass from the reference to its originator upon creation, otherwise it would be a non-satic value
 		StartCoroutine ("DestroySelf");
 	}
 	

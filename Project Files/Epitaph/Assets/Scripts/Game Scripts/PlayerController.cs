@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour {
 			transform.position = new Vector2 (transform.position.x, 4.1f);
 		}
 
+		//legacy movement control
 		/*if (Input.GetKey (KeyCode.UpArrow)) {
 			transform.Translate (Vector2.up * (controllerSpeed) * Time.deltaTime);
 		} 
@@ -64,7 +65,7 @@ public class PlayerController : MonoBehaviour {
 		} */
 	}
 
-	IEnumerator PickupTimer () {
+	IEnumerator PickupTimer () { //controls the length of time pickups are active for
 		while (pickupLength > 0) {
 			yield return new WaitForSeconds (1);
 			pickupLength--;
@@ -76,7 +77,7 @@ public class PlayerController : MonoBehaviour {
 		StopCoroutine ("TripleAttack");
 	}
 
-	IEnumerator Attack () {
+	IEnumerator Attack () { //standard attack from main emitter
 		while (singleEmitter == true) {
 			StopCoroutine ("PickupTimer");
 			Instantiate (projectile1, frontEmitter.transform.position, Quaternion.identity);
@@ -85,7 +86,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	IEnumerator DualAttack () {
-		while (doubleEmitter == true) {
+		while (doubleEmitter == true) { //starts firing from top and bottom emitters
 			Debug.Log ("Dual blast activated, should be firing.");
 			Instantiate (projectile1, topEmitter.transform.position, Quaternion.identity);
 			Instantiate (projectile1, bottomEmitter.transform.position, Quaternion.identity);
@@ -93,7 +94,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	IEnumerator TripleAttack () {
+	IEnumerator TripleAttack () { //start firing from all emitters
 		while (tripleEmitter == true) {
 			Debug.Log ("Dual blast activated, should be firing.");
 			Instantiate (projectile1, frontEmitter.transform.position, Quaternion.identity);
@@ -103,7 +104,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	void ControllerPosition () {
+	void ControllerPosition () { //gets the x and y of the controllers position
 		controllerX = transform.position.x;
 		controllerY = transform.position.y;
 

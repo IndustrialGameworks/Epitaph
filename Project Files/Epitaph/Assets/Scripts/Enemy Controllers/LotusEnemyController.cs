@@ -21,7 +21,7 @@ public class LotusEnemyController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		centerOfMass = origin.transform.position;
+		centerOfMass = origin.transform.position; //assigns center of object so that its projectiles can access it for their translation
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
 	}
 	
@@ -50,7 +50,7 @@ public class LotusEnemyController : MonoBehaviour {
 	IEnumerator Attack () {
 		while (true) {
 			spawnedProjectile = Instantiate (projectile, emitters [0].transform.position, Quaternion.identity) as GameObject; //spawns projectile, returns gameObject
-			spawnedProjectile.gameObject.GetComponent<lotusProjectile>().spawnOrigin = gameObject; //assigns enemy to the projectile as point of origin
+			spawnedProjectile.gameObject.GetComponent<lotusProjectile>().spawnOrigin = gameObject; //assigns this enemy instance to the projectile as point of origin
 
 			spawnedProjectile = Instantiate (projectile, emitters [1].transform.position, Quaternion.identity) as GameObject;
 			spawnedProjectile.gameObject.GetComponent<lotusProjectile>().spawnOrigin = gameObject;
