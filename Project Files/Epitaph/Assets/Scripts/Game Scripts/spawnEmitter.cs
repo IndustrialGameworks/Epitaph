@@ -24,15 +24,14 @@ public class spawnEmitter : MonoBehaviour {
 
 	public float secondsBetweenEnemies = 2f;
 	public float secondsBetweenPickups = 1f;
+	public float secondsBeforeBegin = 4f;
 
 	// Use this for initialization
 	void Start () {
 		GetArrayDetails ();
 		currentEmitter = emitters [1]; //needs to be assigned on start
 		secondCurrentEmitter = emitters [2]; //needs to be assigned on start
-
-		StartCoroutine ("SpawnPickup");
-		StartCoroutine ("SpawnEnemy");
+		StartCoroutine ("Initialization");
 	}
 	
 	// Update is called once per frame
@@ -59,6 +58,12 @@ public class spawnEmitter : MonoBehaviour {
 
 		currentEmitter = emitters [randomEmitterNumber];
 		secondCurrentEmitter = emitters [secondRandomEmitterNumber];
+	}
+
+	IEnumerator Initialization () {
+		yield return new WaitForSeconds (secondsBeforeBegin);
+		StartCoroutine ("SpawnPickup");
+		StartCoroutine ("SpawnEnemy");
 	}
 
 	//Coroutine that handles spawning enemies
