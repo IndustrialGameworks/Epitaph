@@ -11,6 +11,11 @@ public class PlayScript : MonoBehaviour
 			SceneManager.LoadScene ("Test");
 		}
 
+		public void restart()
+		{
+			SceneManager.LoadScene ("Test");
+		}
+
 		public void exitGame()
 		{
 			Application.Quit ();

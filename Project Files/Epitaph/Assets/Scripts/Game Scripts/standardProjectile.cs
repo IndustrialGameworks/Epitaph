@@ -17,7 +17,7 @@ public class standardProjectile : MonoBehaviour {
 		Movement ();
 		TagControl ();
 	}
-
+		
 	void Movement () {
 		if (isEnemy == false) {
 			transform.Translate (Vector2.right * projectileSpeed * Time.deltaTime);

@@ -10,22 +10,26 @@ public class GameController : MonoBehaviour {
 	public Text score;
 	public Text highscore;
 	string log;
+	public PlayerController player;
+	public Button retryButton;
+	public Button quitButton;
 
 	// Use this for initialization
 	void Start () 
-	{
-		highscore.text = "HighScore : " + PlayerPrefs.GetFloat("HighScore", 0).ToString(); 	
+	{ 	
+		retryButton.gameObject.SetActive (false);
+		quitButton.gameObject.SetActive (false);
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
 		DisplayScore ();
-		score.text = "score : " + log;
 		scoreTracking ();
 		restart ();
 		resetHighScore ();
-		highscore.text = "HighScore : " + PlayerPrefs.GetFloat("HighScore", 0).ToString(); 	
+		StartCoroutine ("initializeScores");
+		endGame ();
 	}
 
 	void DisplayScore () 
@@ -45,6 +49,13 @@ public class GameController : MonoBehaviour {
 
 	}
 
+	IEnumerator initializeScores ()
+	{
+		yield return new WaitForSeconds (4f);
+		score.text = "score : " + log;
+		highscore.text = "HighScore : " + PlayerPrefs.GetFloat("HighScore", 0).ToString(); 	
+	}
+
 	void restart()
 	{
 		if (Input.GetKey (KeyCode.R))
@@ -59,6 +70,15 @@ public class GameController : MonoBehaviour {
 		if (Input.GetKey (KeyCode.O))
 		{
 			PlayerPrefs.SetFloat ("HighScore", 0);
+		}
+	}
+
+	void endGame()
+	{
+		if (player.isDead == true)
+		{
+			retryButton.gameObject.SetActive (true);
+			quitButton.gameObject.SetActive (true);
 		}
 	}
 }

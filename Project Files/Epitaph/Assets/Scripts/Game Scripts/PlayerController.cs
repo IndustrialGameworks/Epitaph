@@ -10,12 +10,14 @@ public class PlayerController : MonoBehaviour {
 	public float controllerSpeed;
 
 	//Attack Variables
+	public float delayBeforeFirstAttack = 3.8f;
 	public float delayBetweenProjectiles = 1.5f;
 	public GameObject frontEmitter;
 	public GameObject topEmitter;
 	public GameObject bottomEmitter;
 	public GameObject projectile1;
 	public GameObject projectile2;
+	public bool isDead = false;
 
 	//Pickup Variables
 	public float pickupLength = 5;
@@ -27,7 +29,7 @@ public class PlayerController : MonoBehaviour {
 		controllerX = transform.position.x;
 		controllerY = transform.position.y;
 
-		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
+		StartCoroutine ("Initialization"); //starts a coroutine running for firing projectiles
 	}
 
 	void Update () {
@@ -63,6 +65,12 @@ public class PlayerController : MonoBehaviour {
 		else if (Input.GetKey (KeyCode.RightArrow)) {
 			transform.Translate (Vector2.right * (controllerSpeed) * Time.deltaTime);
 		} */
+	}
+
+	IEnumerator Initialization()
+	{
+		yield return new WaitForSeconds (delayBeforeFirstAttack);
+		StartCoroutine ("Attack");
 	}
 
 	IEnumerator PickupTimer () { //controls the length of time pickups are active for
@@ -115,6 +123,7 @@ public class PlayerController : MonoBehaviour {
 	{
 		if (other.tag == "EnemyProjectile" || other.tag == "Enemy") {
 			Destroy (gameObject);
+			isDead = true;
 		}
 		if (other.tag == "PickupDualBlast") {
 			Debug.Log ("Dual blast picked up");
@@ -141,4 +150,5 @@ public class PlayerController : MonoBehaviour {
 			StopCoroutine ("DualAttack");
 		}
 	}
+
 }
