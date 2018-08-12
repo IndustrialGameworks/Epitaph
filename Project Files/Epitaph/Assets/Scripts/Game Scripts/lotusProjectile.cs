@@ -24,6 +24,7 @@ public class lotusProjectile : MonoBehaviour {
 
 	void Movement () {
 		Vector2 newVector = currentPosition - storedCenterOfMass;
+		newVector.Normalize ();
 		transform.Translate (newVector * projectileSpeed * Time.deltaTime);
 	}
 

@@ -8,6 +8,7 @@ public class LotusEnemyController : MonoBehaviour {
 	public GameObject [] emitters;
 	public GameObject origin;
 	public GameObject movementController; //parent that doesn't change rotation, so can still use world vectors
+	public float rotationSpeed = 5;
 
 	GameObject spawnedProjectile;
 	public Vector2 centerOfMass;
@@ -36,7 +37,7 @@ public class LotusEnemyController : MonoBehaviour {
 
 	void Movement () {
 		movementController.transform.Translate (Vector2.left * movementSpeed * Time.deltaTime); 
-		transform.Rotate (Vector3.forward * 5);
+		transform.Rotate (Vector3.forward * rotationSpeed);
 		centerOfMass = origin.transform.position;
 	}
 
