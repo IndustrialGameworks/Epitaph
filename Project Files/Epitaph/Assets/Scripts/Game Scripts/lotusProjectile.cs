@@ -13,7 +13,6 @@ public class lotusProjectile : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		storedCenterOfMass = spawnOrigin.GetComponent<LotusEnemyController> ().centerOfMass; //gets the center of mass from the reference to its originator upon creation, otherwise it would be a non-satic value
-		StartCoroutine ("DestroySelf");
 	}
 	
 	// Update is called once per frame
@@ -28,8 +27,8 @@ public class lotusProjectile : MonoBehaviour {
 		transform.Translate (newVector * projectileSpeed * Time.deltaTime);
 	}
 
-	IEnumerator DestroySelf () {
-		yield return new WaitForSeconds(delayBeforeDestroy);
+	void OnBecameInvisible ()
+	{
 		Destroy (gameObject);
 	}
 }

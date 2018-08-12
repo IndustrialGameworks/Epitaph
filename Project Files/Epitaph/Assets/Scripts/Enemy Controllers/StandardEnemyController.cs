@@ -71,4 +71,9 @@ public class StandardEnemyController : MonoBehaviour {
 			health -= 50;
 		}
 	}
+
+	void OnBecameInvisible ()
+	{
+		Destroy (gameObject);
+	}
 }
