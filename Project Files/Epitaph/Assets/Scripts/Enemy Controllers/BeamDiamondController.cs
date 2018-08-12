@@ -52,8 +52,10 @@ public class BeamDiamondController : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if (other.tag == "PlayerProjectile") {
+		if (other.tag == "PlayerProjectile") 
+		{
 			health -= 50;
+			Destroy (other.gameObject);
 		}
 	}
 

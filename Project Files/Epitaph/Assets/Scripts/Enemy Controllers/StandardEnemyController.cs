@@ -69,6 +69,7 @@ public class StandardEnemyController : MonoBehaviour {
 	{
 		if (other.tag == "PlayerProjectile") {
 			health -= 50;
+			Destroy (other.gameObject);
 		}
 	}
 
