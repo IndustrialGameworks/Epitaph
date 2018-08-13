@@ -122,8 +122,8 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other)
 	{
 		if (other.tag == "EnemyProjectile" || other.tag == "Enemy") {
-			Destroy (gameObject);
 			isDead = true;
+			Destroy (gameObject);
 		}
 		if (other.tag == "PickupDualBlast") {
 			Debug.Log ("Dual blast picked up");
