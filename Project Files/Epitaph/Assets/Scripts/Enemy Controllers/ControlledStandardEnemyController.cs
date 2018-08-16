@@ -124,6 +124,7 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 
 	void OnBecameInvisible ()
 	{
+		Destroy(transform.parent.gameObject);
 		Destroy (gameObject);
 	}
 }
