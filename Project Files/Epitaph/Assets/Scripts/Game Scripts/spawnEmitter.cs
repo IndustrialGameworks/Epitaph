@@ -16,7 +16,9 @@ public class spawnEmitter : MonoBehaviour {
 
 	//Holds the location of all emitters in an array for easy referencing
 	int emitterArraySize;
-	public GameObject[] emitters;
+	public GameObject [] emitters;
+	public GameObject [] topEmitters;
+	public GameObject [] bottomEmitters;
 	GameObject currentEmitter;
 	GameObject secondCurrentEmitter;
 	int randomEmitterNumber;
