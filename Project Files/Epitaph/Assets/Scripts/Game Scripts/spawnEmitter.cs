@@ -22,7 +22,7 @@ public class spawnEmitter : MonoBehaviour {
 	int randomEmitterNumber;
 	int secondRandomEmitterNumber;
 
-	public float secondsBetweenEnemies = 2f;
+	public float secondsBetweenEnemies;
 	public float secondsBetweenPickups = 1f;
 	public float secondsBeforeBegin = 4f;
 
@@ -70,16 +70,16 @@ public class spawnEmitter : MonoBehaviour {
 	IEnumerator SpawnEnemy () {
 		while (true) {
 			GameObject multispawn = currentEmitter; //hold the spawn emitter number until enmy group is out
-			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity);
-			yield return new WaitForSeconds(0.25f); //for testing multiple enemies
-			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity); //for testing multiple enemies
-			yield return new WaitForSeconds(0.25f); //for testing multiple enemies
-			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity); //for testing multiple enemies
-			yield return new WaitForSeconds(0.25f); //for testing multiple enemies
-			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity); //for testing multiple enemies
-			yield return new WaitForSeconds(0.25f); //for testing multiple enemies
-			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity); //for testing multiple enemies
-			yield return new WaitForSeconds(secondsBetweenEnemies);
+			Instantiate (enemy [0], multispawn.transform.position , Quaternion.identity);
+			yield return new WaitForSeconds(secondsBetweenEnemies); //for testing multiple enemies
+//			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity); //for testing multiple enemies
+//			yield return new WaitForSeconds(0.25f); //for testing multiple enemies
+//			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity); //for testing multiple enemies
+//			yield return new WaitForSeconds(0.25f); //for testing multiple enemies
+//			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity); //for testing multiple enemies
+//			yield return new WaitForSeconds(0.25f); //for testing multiple enemies
+//			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity); //for testing multiple enemies
+//			yield return new WaitForSeconds(secondsBetweenEnemies);
 		}
 	}
 	 
