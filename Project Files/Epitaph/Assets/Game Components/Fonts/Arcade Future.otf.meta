@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 5c1f256d7df4fa842b009c33cd2b9c15
+timeCreated: 1534422964
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Arcade Future Display
+  fontNames:
+  - Arcade Future Display
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

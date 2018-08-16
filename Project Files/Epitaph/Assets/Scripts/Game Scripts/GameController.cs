@@ -9,10 +9,14 @@ public class GameController : MonoBehaviour {
 	public static int gameScore = 0;
 	public Text score;
 	public Text highscore;
+	public Text scoreEnd;
+	public Text highScoreEnd;
+	bool newHighScore = false;
 	string log;
 	public PlayerController player;
 	public Button retryButton;
 	public Button quitButton;
+	bool highscoreFlash = false;
 
 	// Use this for initialization
 	void Start () 
@@ -44,6 +48,7 @@ public class GameController : MonoBehaviour {
 
 		if (gameScore > PlayerPrefs.GetFloat ("HighScore", 0)) 
 		{
+			newHighScore = true;
 			PlayerPrefs.SetFloat ("HighScore", gameScore);
 			highscore.text = "HighScore : " + log;
 		}
@@ -64,6 +69,10 @@ public class GameController : MonoBehaviour {
 			SceneManager.LoadScene ("Test");
 			gameScore = 0;
 		}
+		if (Input.GetKey (KeyCode.Escape)) 
+		{
+			Application.Quit ();
+		}
 	}
 
 	void resetHighScore()
@@ -80,6 +89,36 @@ public class GameController : MonoBehaviour {
 		{
 			retryButton.gameObject.SetActive (true);
 			quitButton.gameObject.SetActive (true);
+			if (newHighScore == true) 
+			{
+				scoreEnd.text = "New HighScore";
+				if (highscoreFlash == false)
+				{
+					StartCoroutine ("flashNewHighScore");
+					highscoreFlash = true;
+				}
+				score.gameObject.SetActive (false);
+				highScoreEnd.text = highscore.text;
+				highscore.gameObject.SetActive (false);
+			}
+			else 
+			{
+				scoreEnd.text = score.text;
+				score.gameObject.SetActive (false);
+				highScoreEnd.text = highscore.text;
+				highscore.gameObject.SetActive (false);
+			}
+		}
+	}
+
+	IEnumerator flashNewHighScore()
+	{
+		while (true) 
+		{
+			yield return new WaitForSeconds (1f);
+			scoreEnd.gameObject.SetActive (false);
+			yield return new WaitForSeconds (0.5f);
+			scoreEnd.gameObject.SetActive (true);
 		}
 	}
 }

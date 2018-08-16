@@ -1,20 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameStartTimer : MonoBehaviour {
 
 	public float delayBeforeCountdown;
-	public GameObject gfx3;
-	public GameObject gfx2;
-	public GameObject gfx1;
-	public GameObject gfxGO;
+	public Text Countdown;
 
 	public AudioClip timer;
 	AudioSource audioSource;
 
 	// Use this for initialization
 	void Start () {
+		Countdown.gameObject.SetActive (false);
 		StartCoroutine ("Timer");
 		audioSource = GetComponent<AudioSource> ();
 	}
@@ -27,17 +26,16 @@ public class GameStartTimer : MonoBehaviour {
 	IEnumerator Timer () { //code for the countdown
 		yield return new WaitForSeconds (delayBeforeCountdown);
 		audioSource.PlayOneShot (timer, 0.7f);
-		gfx3.gameObject.GetComponent<SpriteRenderer> ().enabled = true;
+		Countdown.gameObject.SetActive (true);
+		Countdown.text = "3";
 		yield return new WaitForSeconds (1);
-		gfx3.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
-		gfx2.gameObject.GetComponent<SpriteRenderer> ().enabled = true;
+		Countdown.text = "2";
 		yield return new WaitForSeconds (1);
-		gfx2.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
-		gfx1.gameObject.GetComponent<SpriteRenderer> ().enabled = true;
+		Countdown.text = "1";
 		yield return new WaitForSeconds (1);
-		gfx1.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
-		gfxGO.gameObject.GetComponent<SpriteRenderer> ().enabled = true;
+		Countdown.text = "GO!";
 		yield return new WaitForSeconds (1);
+		Countdown.gameObject.SetActive (false);
 		Destroy (gameObject); //destroys countdown, as no longer need until scene is reloaded
 	}
 }
