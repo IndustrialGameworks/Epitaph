@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ControlledStandardEnemyController : MonoBehaviour {
 
@@ -25,6 +26,11 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	public int navPointsComplete = 0;
 	public float waveSpeed = 10;
 
+	public GameObject pointsText;
+	TextMesh theText;
+	public bool isDestroyed = false;
+
+
 	// Use this for initialization
 	void Start () {
 		StandardEnemyWaveController waveScript = enemyWaveController.GetComponent<StandardEnemyWaveController> ();
@@ -34,15 +40,16 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 		navLocation4 = waveScript.navigationPoints [3].transform.localPosition;
 		navLocation5 = waveScript.navigationPoints [4].transform.localPosition;
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
+		theText = pointsText.GetComponent<TextMesh>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Movement ();
-		Status ();
+		//Status ();
+		StartCoroutine ("Status");
 	}
-
-
+		
 	void Movement () 
 	{
 		if (navPointsComplete == 0) {
@@ -102,10 +109,13 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 
 	void Status () {
 		if (health <= 0) {
-			Destroy (gameObject);
 			GameController.gameScore += (10 * GameController.multiplier);
+			theText.text = "+" + (10 * GameController.multiplier);
+			pointsText.transform.SetParent (enemyWaveController.transform);
+			isDestroyed = true;
 			GameController.multiplier += 1;
 			GameController.timer = 180.0f; 
+			Destroy (gameObject);
 		}
 	}
 
@@ -126,7 +136,6 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 
 	void OnBecameInvisible ()
 	{
-		Destroy(transform.parent.gameObject);
 		Destroy (gameObject);
 	}
 }

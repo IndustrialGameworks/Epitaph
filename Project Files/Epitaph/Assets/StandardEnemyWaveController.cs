@@ -15,6 +15,8 @@ public class StandardEnemyWaveController : MonoBehaviour {
 	public Vector2 navLocation2;
 	public Vector2 navLocation3;
 
+	public ControlledStandardEnemyController enemyController;
+
 
 	//Movement
 	public float waveSpeed;
@@ -27,6 +29,7 @@ public class StandardEnemyWaveController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Movement ();
+		StartCoroutine ("destroyThis");
 	}
 
 	void Movement () {
@@ -130,5 +133,19 @@ public class StandardEnemyWaveController : MonoBehaviour {
 //				Destroy (gameObject);
 //			}
 //		}
+	}
+
+	IEnumerator destroyThis ()
+	{
+		if (enemyController.isDestroyed == true) 
+		{
+			yield return new WaitForSeconds (0.5f);
+			Destroy (gameObject);
+		}
+	}
+
+	void OnBecameInvisible ()
+	{
+		Destroy (gameObject);
 	}
 }

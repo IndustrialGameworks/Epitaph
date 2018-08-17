@@ -51,7 +51,7 @@ public class spawnEmitter : MonoBehaviour {
 
 	//gets the details of array length at startup and then saves them to variables for use by the random generators
 	void GetArrayDetails () {
-		emitterArraySize = emitters.Length;
+		emitterArraySize = emitters.Length ;
 		topEmitterArraySize = topEmitters.Length;
 		pickupArraySize = pickup.Length;
 		enemyArraySize = enemy.Length;
@@ -63,11 +63,11 @@ public class spawnEmitter : MonoBehaviour {
 
 	//generates random numbers to call items from the arrays
 	void RandomGenerator () {
-		randomEmitterNumber = Random.Range (0, emitterArraySize + 1);
-		topBottomRandomEmitterNumber = Random.Range (0, topEmitterArraySize + 1);
-		currentRandomPickup =  Random.Range (0, pickupArraySize + 1);
-		currentRandomEnemy = Random.Range (0, enemyArraySize + 1);
-		currentRandomSpecialEnemy = Random.Range (0, specialEnemyArraySize + 1);
+		randomEmitterNumber = Random.Range (0, emitterArraySize);
+		topBottomRandomEmitterNumber = Random.Range (0, topEmitterArraySize);
+		currentRandomPickup =  Random.Range (0, pickupArraySize);
+		currentRandomEnemy = Random.Range (0, enemyArraySize);
+		currentRandomSpecialEnemy = Random.Range (0, specialEnemyArraySize);
 
 		randomEmitterSpawn = Random.Range (0, 2);
 

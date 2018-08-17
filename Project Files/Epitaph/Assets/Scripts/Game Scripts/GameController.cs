@@ -38,7 +38,7 @@ public class GameController : MonoBehaviour {
 //		DisplayScore ();
 //		displayMultiplier ();
 		timer = timer - 1.0f;
-		Debug.Log (timer.ToString ());
+//		Debug.Log (timer.ToString ());
 		scoreTracking ();
 		restart ();
 		resetHighScore ();
@@ -62,7 +62,7 @@ public class GameController : MonoBehaviour {
 			PlayerPrefs.SetFloat ("HighScore", gameScore);
 			highscore.text = "HighScore : " + log;
 		}
-		multiplier = Mathf.Clamp (multiplier, 1, 5);
+		multiplier = Mathf.Clamp (multiplier, 1, 10);
 	}
 
 	IEnumerator initializeScores ()
@@ -70,7 +70,7 @@ public class GameController : MonoBehaviour {
 		yield return new WaitForSeconds (4f);
 		score.text = "score : " + log;
 		highscore.text = "HighScore : " + PlayerPrefs.GetFloat("HighScore", 0).ToString();
-		scoreMultiplier.text = multiplier.ToString();
+		scoreMultiplier.text = multiplier + "x";
 	}
 
 	void restart()
@@ -137,6 +137,31 @@ public class GameController : MonoBehaviour {
 
 	void multiplierDegradation ()
 	{
+		if (multiplier == 10 && timer <= 0.0f) 
+		{
+			multiplier = 1;
+			timer = 180.0f;
+		}
+		if (multiplier == 9 && timer <= 0.0f) 
+		{
+			multiplier = 1;
+			timer = 180.0f;
+		}
+		if (multiplier == 8 && timer <= 0.0f) 
+		{
+			multiplier = 1;
+			timer = 180.0f;
+		}
+		if (multiplier == 7 && timer <= 0.0f) 
+		{
+			multiplier = 1;
+			timer = 180.0f;
+		}
+		if (multiplier == 6 && timer <= 0.0f) 
+		{
+			multiplier = 1;
+			timer = 180.0f;
+		}
 		if (multiplier == 5 && timer <= 0.0f) 
 		{
 			multiplier = 1;
