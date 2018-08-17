@@ -26,6 +26,7 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	public int navPointsComplete = 0;
 	public float waveSpeed = 10;
 
+	//text variables
 	public GameObject pointsText;
 	TextMesh theText;
 	public bool isDestroyed = false;
@@ -33,33 +34,32 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		StandardEnemyWaveController waveScript = enemyWaveController.GetComponent<StandardEnemyWaveController> ();
-		navLocation1 = waveScript.navigationPoints [0].transform.localPosition;
+		StandardEnemyWaveController waveScript = enemyWaveController.GetComponent<StandardEnemyWaveController> ();//brings in script from standardwavecontroller.
+		navLocation1 = waveScript.navigationPoints [0].transform.localPosition;//these call the positions of the 5 nav points.
 		navLocation2 = waveScript.navigationPoints [1].transform.localPosition;
 		navLocation3 = waveScript.navigationPoints [2].transform.localPosition;
 		navLocation4 = waveScript.navigationPoints [3].transform.localPosition;
 		navLocation5 = waveScript.navigationPoints [4].transform.localPosition;
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
-		theText = pointsText.GetComponent<TextMesh>();
+		theText = pointsText.GetComponent<TextMesh>();//calls textmesh.
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Movement ();
-		//Status ();
-		StartCoroutine ("Status");
+		Status ();
 	}
 		
 	void Movement () 
 	{
-		if (navPointsComplete == 0) {
+		if (navPointsComplete == 0) {//check if the enemies position is less than/ greater than the position of the nav point and a specific axis.
 			if (gameObject.transform.localPosition.x > navLocation1.x)
 			{
-				gameObject.transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);
+				gameObject.transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
 			}
 			else 
 			{
-				navPointsComplete = 1;
+				navPointsComplete = 1;//set navpoints complete to +1 so the enemy can move on to the next nav point.
 			}
 		} 
 		else if (navPointsComplete == 1) 

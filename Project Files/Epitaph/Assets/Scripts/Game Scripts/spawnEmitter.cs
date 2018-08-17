@@ -97,14 +97,9 @@ public class spawnEmitter : MonoBehaviour {
 			GameObject multispawn = currentEmitter; //hold the spawn emitter number until enmy group is out
 			Instantiate (enemy [0], multispawn.transform.position , Quaternion.identity);
 			yield return new WaitForSeconds(secondsBetweenEnemies); //for testing multiple enemies
-//			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity); //for testing multiple enemies
-//			yield return new WaitForSeconds(0.25f); //for testing multiple enemies
-//			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity); //for testing multiple enemies
-//			yield return new WaitForSeconds(0.25f); //for testing multiple enemies
-//			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity); //for testing multiple enemies
-//			yield return new WaitForSeconds(0.25f); //for testing multiple enemies
-//			Instantiate (enemy [currentRandomEnemy], multispawn.transform.position , Quaternion.identity); //for testing multiple enemies
-//			yield return new WaitForSeconds(secondsBetweenEnemies);
+//			GameObject multispawn = currentEmitter; //hold the spawn emitter number until enmy group is out
+//			Instantiate (enemy [0], multispawn.transform.position , Quaternion.identity);
+//			yield return new WaitForSeconds(secondsBetweenEnemies); //for testing multiple enemies
 		}
 	}
 
