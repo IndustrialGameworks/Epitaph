@@ -95,7 +95,7 @@ public class spawnEmitter : MonoBehaviour {
 	IEnumerator SpawnEnemy () {
 		while (true) {
 			GameObject multispawn = currentEmitter; //hold the spawn emitter number until enmy group is out
-			Instantiate (enemy [0], multispawn.transform.position , Quaternion.identity);
+			Instantiate (enemy [0], emitters[5].transform.position , Quaternion.identity);
 			yield return new WaitForSeconds(secondsBetweenEnemies); //for testing multiple enemies
 //			GameObject multispawn = currentEmitter; //hold the spawn emitter number until enmy group is out
 //			Instantiate (enemy [0], multispawn.transform.position , Quaternion.identity);

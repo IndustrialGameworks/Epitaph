@@ -23,8 +23,9 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	public Vector2 navLocation3;
 	public Vector2 navLocation4;
 	public Vector2 navLocation5;
+	public float distance = 1;
 	public int navPointsComplete = 0;
-	public float waveSpeed = 10;
+	public float waveSpeed = 3;
 
 	//text variables
 	public GameObject pointsText;
@@ -35,27 +36,33 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		StandardEnemyWaveController waveScript = enemyWaveController.GetComponent<StandardEnemyWaveController> ();//brings in script from standardwavecontroller.
-		navLocation1 = waveScript.navigationPoints [0].transform.localPosition;//these call the positions of the 5 nav points.
-		navLocation2 = waveScript.navigationPoints [1].transform.localPosition;
-		navLocation3 = waveScript.navigationPoints [2].transform.localPosition;
-		navLocation4 = waveScript.navigationPoints [3].transform.localPosition;
-		navLocation5 = waveScript.navigationPoints [4].transform.localPosition;
+		navLocation1 = waveScript.navigationPoints [0].transform.position;//these call the positions of the 5 nav points.
+		navLocation2 = waveScript.navigationPoints [1].transform.position;
+		navLocation3 = waveScript.navigationPoints [2].transform.position;
+		navLocation4 = waveScript.navigationPoints [3].transform.position;
+		navLocation5 = waveScript.navigationPoints [4].transform.position;
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
 		theText = pointsText.GetComponent<TextMesh>();//calls textmesh.
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		Movement ();
 		Status ();
 	}
 		
 	void Movement () 
 	{
-		if (navPointsComplete == 0) {//check if the enemies position is less than/ greater than the position of the nav point and a specific axis.
-			if (gameObject.transform.localPosition.x > navLocation1.x)
+		float dist = Vector2.Distance(gameObject.transform.position, navLocation1);
+		if (navPointsComplete == 0) 
+		{//check if the enemies position is less than/ greater than the position of the nav point and a specific axis.
+			//Debug.Log("navpointscomplete 0");
+			if (dist > distance)
 			{
-				gameObject.transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
+				//Debug.Log ("dis1>distance");
+				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
+				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation1, waveSpeed * Time.deltaTime));
 			}
 			else 
 			{
@@ -64,47 +71,60 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 		} 
 		else if (navPointsComplete == 1) 
 		{
-			if (gameObject.transform.localPosition.y > navLocation2.y) 
+			dist = Vector2.Distance(gameObject.transform.position, navLocation2);
+			if (dist > distance)
 			{
-				gameObject.transform.Translate (0, -waveSpeed * Time.deltaTime, 0);
-			} 
-			else 
-			{
-				navPointsComplete = 2;
+				//Debug.Log ("dis1>distance");
+				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
+				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation2, waveSpeed * Time.deltaTime));
 			}
-		} else if (navPointsComplete == 2) 
-		{
-			if (gameObject.transform.localPosition.x < navLocation3.x) 
-			{
-				gameObject.transform.Translate (waveSpeed * Time.deltaTime, 0, 0);
-			} 
 			else 
 			{
-				navPointsComplete = 3;
+				navPointsComplete = 2;//set navpoints complete to +1 so the enemy can move on to the next nav point.
+			}
+		} 
+		else if (navPointsComplete == 2) 
+		{
+			dist = Vector2.Distance(gameObject.transform.position, navLocation3);
+			if (dist > distance)
+			{
+				//Debug.Log ("dis1>distance");
+				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
+				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation3, waveSpeed * Time.deltaTime));
+			}
+			else 
+			{
+				navPointsComplete = 3;//set navpoints complete to +1 so the enemy can move on to the next nav point.
 			}
 		} 
 		else if (navPointsComplete == 3) 
 		{
-			if (gameObject.transform.localPosition.y < navLocation4.y) 
+			dist = Vector2.Distance(gameObject.transform.position, navLocation4);
+			if (dist > distance)
 			{
-				gameObject.transform.Translate (0, waveSpeed * Time.deltaTime, 0);
-			} 
+				//Debug.Log ("dis1>distance");
+				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
+				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation4, waveSpeed * Time.deltaTime));
+			}
 			else 
 			{
-				navPointsComplete = 4;
+				navPointsComplete = 4;//set navpoints complete to +1 so the enemy can move on to the next nav point.
 			}
 		} 
 		else if (navPointsComplete == 4) 
 		{
-			if (gameObject.transform.localPosition.x > navLocation5.x) 
+			dist = Vector2.Distance(gameObject.transform.position, navLocation5);
+			if (dist > distance)
 			{
-				gameObject.transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);
-			} 
+				//Debug.Log ("dis1>distance");
+				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
+				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation5, waveSpeed * Time.deltaTime));
+			}
 			else 
 			{
-				navPointsComplete = 5;
+				navPointsComplete = 5;//set navpoints complete to +1 so the enemy can move on to the next nav point.
 			}
-		}
+		} 
 	}
 
 	void Status () {
@@ -136,6 +156,7 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 
 	void OnBecameInvisible ()
 	{
+		isDestroyed = true;
 		Destroy (gameObject);
 	}
 }
