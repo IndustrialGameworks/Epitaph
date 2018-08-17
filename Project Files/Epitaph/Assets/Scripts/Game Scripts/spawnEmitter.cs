@@ -107,7 +107,7 @@ public class spawnEmitter : MonoBehaviour {
 	IEnumerator SpawnEnemy () {
 		while (true) {
 			GameObject multispawn = currentEmitter; //hold the spawn emitter number until enmy group is out
-			Instantiate (enemy [0], emitters[5].transform.position , Quaternion.identity);
+			Instantiate (enemy [0], multispawn.transform.position , Quaternion.identity);
 			yield return new WaitForSeconds(secondsBetweenEnemies); //for testing multiple enemies
 //			GameObject multispawn = currentEmitter; //hold the spawn emitter number until enmy group is out
 //			Instantiate (enemy [0], multispawn.transform.position , Quaternion.identity);
@@ -120,16 +120,16 @@ public class spawnEmitter : MonoBehaviour {
 	IEnumerator SpawnWaves () {
 		while (true) {
 			if (randomSelector == 0) {
-				Instantiate (basicWave1 [0], emitters [5].transform.position, Quaternion.identity);
-				Instantiate (basicWave1 [1], emitters [5].transform.position, Quaternion.identity);
+				Instantiate (basicWave1 [0], emitters [4].transform.position, Quaternion.identity);
+				Instantiate (basicWave1 [1], emitters [4].transform.position, Quaternion.identity);
 			}
 			if (randomSelector == 1) {
-				Instantiate (basicWave2 [0], emitters [5].transform.position, Quaternion.identity);
-				Instantiate (basicWave2 [1], emitters [5].transform.position, Quaternion.identity);
+				Instantiate (basicWave2 [0], emitters [4].transform.position, Quaternion.identity);
+				Instantiate (basicWave2 [1], emitters [4].transform.position, Quaternion.identity);
 			}
 			if (randomSelector == 2) {
-				Instantiate (basicWave3 [0], emitters [5].transform.position, Quaternion.identity);
-				Instantiate (basicWave3 [1], emitters [5].transform.position, Quaternion.identity);
+				Instantiate (basicWave3 [0], emitters [4].transform.position, Quaternion.identity);
+				Instantiate (basicWave3 [1], emitters [4].transform.position, Quaternion.identity);
 			}
 			yield return new WaitForSeconds (secondsBetweenEnemies);
 		}
