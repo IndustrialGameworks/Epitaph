@@ -139,22 +139,22 @@ public class GameController : MonoBehaviour {
 	{
 		if (multiplier == 5 && timer <= 0.0f) 
 		{
-			multiplier--;
+			multiplier = 1;
 			timer = 180.0f;
 		}
 		if (multiplier == 4 && timer <= 0.0f) 
 		{
-			multiplier--;
+			multiplier = 1;
 			timer = 180.0f;
 		}
 		if (multiplier == 3 && timer <= 0.0f) 
 		{
-			multiplier--;
+			multiplier = 1;
 			timer = 180.0f;
 		}
 		if (multiplier == 2 && timer <= 0.0f) 
 		{
-			multiplier--;
+			multiplier = 1;
 			timer = 180.0f;
 		}
 		if (multiplier == 1) 

@@ -63,13 +63,13 @@ public class spawnEmitter : MonoBehaviour {
 
 	//generates random numbers to call items from the arrays
 	void RandomGenerator () {
-		randomEmitterNumber = Random.Range (0, emitterArraySize);
-		topBottomRandomEmitterNumber = Random.Range (0, topEmitterArraySize);
-		currentRandomPickup =  Random.Range (0, pickupArraySize);
-		currentRandomEnemy = Random.Range (0, enemyArraySize);
-		currentRandomSpecialEnemy = Random.Range (0, specialEnemyArraySize);
+		randomEmitterNumber = Random.Range (0, emitterArraySize + 1);
+		topBottomRandomEmitterNumber = Random.Range (0, topEmitterArraySize + 1);
+		currentRandomPickup =  Random.Range (0, pickupArraySize + 1);
+		currentRandomEnemy = Random.Range (0, enemyArraySize + 1);
+		currentRandomSpecialEnemy = Random.Range (0, specialEnemyArraySize + 1);
 
-		randomEmitterSpawn = Random.Range (0, 1);
+		randomEmitterSpawn = Random.Range (0, 2);
 
 		currentEmitter = emitters [randomEmitterNumber];
 		//secondCurrentEmitter = emitters [secondRandomEmitterNumber];
