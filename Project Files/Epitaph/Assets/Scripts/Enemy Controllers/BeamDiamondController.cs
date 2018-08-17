@@ -19,7 +19,7 @@ public class BeamDiamondController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		playerToTrack = GameObject.FindWithTag ("Player");
 	}
 	
 	// Update is called once per frame
