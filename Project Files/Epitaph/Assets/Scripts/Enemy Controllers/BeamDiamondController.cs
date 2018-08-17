@@ -46,7 +46,9 @@ public class BeamDiamondController : MonoBehaviour {
 	void Status () {
 		if (health <= 0) {
 			Destroy (gameObject);
-			GameController.gameScore += 100;
+			GameController.gameScore += (100 * GameController.multiplier);
+			GameController.multiplier += 1;
+			GameController.timer = 180.0f;
 		}
 	}
 

@@ -103,7 +103,9 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	void Status () {
 		if (health <= 0) {
 			Destroy (gameObject);
-			GameController.gameScore += 10;
+			GameController.gameScore += (10 * GameController.multiplier);
+			GameController.multiplier += 1;
+			GameController.timer = 180.0f; 
 		}
 	}
 

@@ -11,16 +11,22 @@ public class GameController : MonoBehaviour {
 	public Text highscore;
 	public Text scoreEnd;
 	public Text highScoreEnd;
+	public static int multiplier = 1;
 	bool newHighScore = false;
+	public Text scoreMultiplier;
 	string log;
 	public PlayerController player;
 	public Button retryButton;
 	public Button quitButton;
 	bool highscoreFlash = false;
 
+
+	public static float timer = 180.0f;
+
 	// Use this for initialization
 	void Start () 
 	{ 	
+		multiplier = 1;
 		gameScore = 0;
 		retryButton.gameObject.SetActive (false);
 		quitButton.gameObject.SetActive (false);
@@ -29,18 +35,22 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		DisplayScore ();
+//		DisplayScore ();
+//		displayMultiplier ();
+		timer = timer - 1.0f;
+		Debug.Log (timer.ToString ());
 		scoreTracking ();
 		restart ();
 		resetHighScore ();
 		StartCoroutine ("initializeScores");
 		endGame ();
+		multiplierDegradation ();
 	}
 
-	void DisplayScore () 
-	{
-		Debug.Log ("Score " + gameScore);
-	}
+//	void DisplayScore () 
+//	{
+//		Debug.Log ("Score " + gameScore);
+//	}
 
 	void scoreTracking ()
 	{
@@ -52,14 +62,15 @@ public class GameController : MonoBehaviour {
 			PlayerPrefs.SetFloat ("HighScore", gameScore);
 			highscore.text = "HighScore : " + log;
 		}
-
+		multiplier = Mathf.Clamp (multiplier, 1, 5);
 	}
 
 	IEnumerator initializeScores ()
 	{
 		yield return new WaitForSeconds (4f);
 		score.text = "score : " + log;
-		highscore.text = "HighScore : " + PlayerPrefs.GetFloat("HighScore", 0).ToString(); 	
+		highscore.text = "HighScore : " + PlayerPrefs.GetFloat("HighScore", 0).ToString();
+		scoreMultiplier.text = multiplier.ToString();
 	}
 
 	void restart()
@@ -100,6 +111,7 @@ public class GameController : MonoBehaviour {
 				score.gameObject.SetActive (false);
 				highScoreEnd.text = highscore.text;
 				highscore.gameObject.SetActive (false);
+				scoreMultiplier.gameObject.SetActive (false);
 			}
 			else 
 			{
@@ -107,6 +119,7 @@ public class GameController : MonoBehaviour {
 				score.gameObject.SetActive (false);
 				highScoreEnd.text = highscore.text;
 				highscore.gameObject.SetActive (false);
+				scoreMultiplier.gameObject.SetActive (false);
 			}
 		}
 	}
@@ -121,4 +134,37 @@ public class GameController : MonoBehaviour {
 			scoreEnd.gameObject.SetActive (true);
 		}
 	}
+
+	void multiplierDegradation ()
+	{
+		if (multiplier == 5 && timer <= 0.0f) 
+		{
+			multiplier--;
+			timer = 180.0f;
+		}
+		if (multiplier == 4 && timer <= 0.0f) 
+		{
+			multiplier--;
+			timer = 180.0f;
+		}
+		if (multiplier == 3 && timer <= 0.0f) 
+		{
+			multiplier--;
+			timer = 180.0f;
+		}
+		if (multiplier == 2 && timer <= 0.0f) 
+		{
+			multiplier--;
+			timer = 180.0f;
+		}
+		if (multiplier == 1) 
+		{
+			timer = 180.0f;
+		}
+	}
+
+//	void displayMultiplier ()
+//	{
+//		Debug.Log ("multiplier: " + multiplier);
+//	}
 }

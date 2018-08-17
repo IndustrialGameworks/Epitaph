@@ -56,9 +56,9 @@ public class spawnEmitter : MonoBehaviour {
 		pickupArraySize = pickup.Length;
 		enemyArraySize = enemy.Length;
 		specialEnemyArraySize = specialEnemy.Length;
-		Debug.Log (emitterArraySize);
-		Debug.Log (enemyArraySize);
-		Debug.Log (pickupArraySize);
+//		Debug.Log (emitterArraySize);
+//		Debug.Log (enemyArraySize);
+//		Debug.Log (pickupArraySize);
 	}
 
 	//generates random numbers to call items from the arrays
