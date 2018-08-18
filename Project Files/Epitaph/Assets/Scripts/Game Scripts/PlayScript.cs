@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-[assembly: System.Reflection.AssemblyVersion("0.0.2.0")]
+[assembly: System.Reflection.AssemblyVersion("0.0.2.1")]
 
 public class PlayScript : MonoBehaviour 
 {
