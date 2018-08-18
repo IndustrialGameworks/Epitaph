@@ -29,12 +29,7 @@ public class StandardEnemyWaveController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Movement ();
 		StartCoroutine ("destroyThis");
-	}
-
-	void Movement () {
-
 	}
 
 	IEnumerator destroyThis ()

@@ -25,46 +25,83 @@ public class PlayerController : MonoBehaviour {
 	bool doubleEmitter = false;
 	bool tripleEmitter = false;
 
-	void Start () {
-		controllerX = transform.position.x;
-		controllerY = transform.position.y;
+	//screen bounds
+	Vector2 bottomCorner;
+	Vector2 topCorner;
+	private float minX, maxX, minY, maxY;
 
+	void Start () {
+		//controllerX = transform.position.x;
+		//controllerY = transform.position.y;
+		bottomCorner = Camera.main.ViewportToWorldPoint(new Vector2(0,0));
+		topCorner = Camera.main.ViewportToWorldPoint(new Vector2(1,1));
 		StartCoroutine ("Initialization"); //starts a coroutine running for firing projectiles
 	}
 
 	void Update () {
-		Movement ();
+		setBounds ();
 		ControllerPosition ();
+		Movement ();
+	}
+
+	void setBounds ()
+	{
+		minX = bottomCorner.x;
+		maxX = topCorner.x;
+		minY = bottomCorner.y;
+		maxY = topCorner.y;
+		Debug.Log ("constraints: " + minX + " minimumX, " + maxX + " maximumX, " + minY + " minimumy, " + maxY + " maximumy.");
 	}
 
 	void Movement () {
 		Vector3 MovementVector;
 		MovementVector = new Vector3 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"), 0.0f);
-		if (transform.position.x >= -10.5f && transform.position.x <= 10.5f && transform.position.y >= -4.2f && transform.position.y <= 4.2f) {
+		if (transform.position.x >= minX && transform.position.x <= maxX && transform.position.y >= minY && transform.position.y <= maxY) 
+		{
 			transform.Translate (MovementVector.normalized * controllerSpeed * Time.deltaTime);
-		} else if (transform.position.x <= -10.5f) {
-			transform.position = new Vector2 (-10.49f, transform.position.y);
-		} else if (transform.position.x >= 10.5f) {
-			transform.position = new Vector2 (10.49f, transform.position.y);
-		} else if (transform.position.y <= -4.2f) {
-			transform.position = new Vector2 (transform.position.x, -4.1f);
-		} else if (transform.position.y >= 4.2f) {
-			transform.position = new Vector2 (transform.position.x, 4.1f);
+		} 
+		else if (transform.position.x <= minX) 
+		{
+			controllerX = minX + 0.001f; //= new Vector2 (minX + 0.001f, transform.position.y);
+			transform.position = new Vector2 (controllerX, controllerY);
+		} 
+		else if (transform.position.x >= maxX) 
+		{
+			controllerX = maxX - 0.001f; // = new Vector2 (maxX - 0.001f , transform.position.y);
+			transform.position = new Vector2 (controllerX, controllerY);
+		} 
+		else if (transform.position.y <= minY) 
+		{
+			controllerY = minY + 0.001f; // = new Vector2 (transform.position.x, minY + 0.001f);
+			transform.position = new Vector2 (controllerX, controllerY);
+		} 
+		else if (transform.position.y >= maxY) 
+		{
+			controllerY = maxY - 0.001f; //new Vector2 (transform.position.x, maxY - 0.001f);
+			transform.position = new Vector2 (controllerX, controllerY);
 		}
 
-		//legacy movement control
-		/*if (Input.GetKey (KeyCode.UpArrow)) {
-			transform.Translate (Vector2.up * (controllerSpeed) * Time.deltaTime);
-		} 
-		else if (Input.GetKey (KeyCode.DownArrow)) {
-			transform.Translate (Vector2.down * (controllerSpeed) * Time.deltaTime);
-		} 
-		else if (Input.GetKey (KeyCode.LeftArrow)) {
-			transform.Translate (Vector2.left * (controllerSpeed) * Time.deltaTime);
-		}
-		else if (Input.GetKey (KeyCode.RightArrow)) {
-			transform.Translate (Vector2.right * (controllerSpeed) * Time.deltaTime);
-		} */
+
+
+
+
+
+
+
+
+//		//legacy movement control
+//		if (Input.GetKey (KeyCode.UpArrow)) {
+//			transform.Translate (Vector2.up * (controllerSpeed) * Time.deltaTime);
+//		} 
+//		else if (Input.GetKey (KeyCode.DownArrow)) {
+//			transform.Translate (Vector2.down * (controllerSpeed) * Time.deltaTime);
+//		} 
+//		else if (Input.GetKey (KeyCode.LeftArrow)) {
+//			transform.Translate (Vector2.left * (controllerSpeed) * Time.deltaTime);
+//		}
+//		else if (Input.GetKey (KeyCode.RightArrow)) {
+//			transform.Translate (Vector2.right * (controllerSpeed) * Time.deltaTime);
+//		} 
 	}
 
 	IEnumerator Initialization()
@@ -115,8 +152,6 @@ public class PlayerController : MonoBehaviour {
 	void ControllerPosition () { //gets the x and y of the controllers position
 		controllerX = transform.position.x;
 		controllerY = transform.position.y;
-
-
 	}
 
 	void OnTriggerEnter2D (Collider2D other)
