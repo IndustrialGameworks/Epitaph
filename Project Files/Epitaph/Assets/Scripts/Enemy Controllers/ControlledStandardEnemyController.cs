@@ -11,7 +11,7 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	public float movementSpeed = 3;
 
 	//Attack Variables
-	public float delayBetweenProjectiles = 1.5f;
+	public float delayBetweenProjectiles;
 	public GameObject frontEmitter;
 	public GameObject projectile1;
 	public GameObject projectile2;
@@ -32,9 +32,14 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	TextMesh theText;
 	public bool isDestroyed = false;
 
+	//editable variables
+	public WaveEnd waveParent;
+	//public GameObject root;
 
 	// Use this for initialization
 	void Start () {
+		waveParent = transform.root.GetComponent<WaveEnd> ();
+		delayBetweenProjectiles = waveParent.attackspeed;
 		StandardEnemyWaveController waveScript = enemyWaveController.GetComponent<StandardEnemyWaveController> ();//brings in script from standardwavecontroller.
 		navLocation1 = waveScript.navigationPoints [0].transform.position;//these call the positions of the 5 nav points.
 		navLocation2 = waveScript.navigationPoints [1].transform.position;

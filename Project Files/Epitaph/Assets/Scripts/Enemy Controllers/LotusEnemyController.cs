@@ -22,6 +22,11 @@ public class LotusEnemyController : MonoBehaviour {
 	int randomY;
 	Vector2 randomVector;
 
+	//text variables
+	public GameObject pointsText;
+	TextMesh theText;
+	public bool isDestroyed;
+
 	//Attack Variables
 	public float delayBetweenProjectiles = 1.5f;
 	public GameObject projectile;
@@ -32,6 +37,7 @@ public class LotusEnemyController : MonoBehaviour {
 		centerOfMass = origin.transform.position; //assigns center of object so that its projectiles can access it for their translation
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
 		StartCoroutine ("BuildRandomLocation");
+		theText = pointsText.GetComponent<TextMesh>();//calls textmesh.
 	}
 	
 	// Update is called once per frame
@@ -55,10 +61,13 @@ public class LotusEnemyController : MonoBehaviour {
 
 	void Status () {
 		if (health <= 0) {
-			Destroy (gameObject);
+			
 			GameController.gameScore += (10 * GameController.multiplier);
+			theText.text = "+" + (10 * GameController.multiplier);
+			isDestroyed = true;
 			GameController.multiplier += 1;
 			GameController.timer = 180.0f;
+			Destroy (gameObject);
 		}
 	}
 
@@ -102,5 +111,11 @@ public class LotusEnemyController : MonoBehaviour {
 			health -= 50;
 			Destroy (other.gameObject);
 		}
+	}
+
+	void OnBecameInvisible ()
+	{
+		isDestroyed = true;
+		Destroy (gameObject);
 	}
 }

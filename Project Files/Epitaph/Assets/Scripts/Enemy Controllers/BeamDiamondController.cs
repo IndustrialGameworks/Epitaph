@@ -17,9 +17,15 @@ public class BeamDiamondController : MonoBehaviour {
 	float axisDifference;
 	bool isFiring;
 
+	public GameObject BeamDiamondParent;
+	public GameObject pointsText;
+	TextMesh theText;
+	public bool isDestroyed = false;
+
 	// Use this for initialization
 	void Start () {
 		playerToTrack = GameObject.FindWithTag ("Player");
+		theText = pointsText.GetComponent<TextMesh> ();
 	}
 	
 	// Update is called once per frame
@@ -45,10 +51,14 @@ public class BeamDiamondController : MonoBehaviour {
 
 	void Status () {
 		if (health <= 0) {
-			Destroy (gameObject);
+			
 			GameController.gameScore += (100 * GameController.multiplier);
+			theText.text = "+" + (100 * GameController.multiplier);
+			pointsText.transform.SetParent (BeamDiamondParent.transform);
+			isDestroyed = true;
 			GameController.multiplier += 1;
 			GameController.timer = 180.0f;
+			Destroy (gameObject);
 		}
 	}
 
@@ -74,5 +84,11 @@ public class BeamDiamondController : MonoBehaviour {
 		fullBeam.gameObject.GetComponent<BoxCollider2D> ().enabled = false;
 		isFiring = false;
 		StopCoroutine ("Attack");
+	}
+
+	void OnBecameInvisible ()
+	{
+		isDestroyed = true;
+		Destroy (gameObject);
 	}
 }
