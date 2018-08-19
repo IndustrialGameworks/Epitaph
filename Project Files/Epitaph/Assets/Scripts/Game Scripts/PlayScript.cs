@@ -17,7 +17,7 @@ public class PlayScript : MonoBehaviour
 
 	void Start ()
 	{
-		PlayerPrefs.GetInt ("playerType", 1);
+		PlayerPrefs.SetInt ("playerType", 1);
 		Debug.Log (PlayerPrefs.GetInt ("playerType", 1).ToString ());
 		Debug.Log(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 		if (versionText != null) 
