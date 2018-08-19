@@ -159,6 +159,7 @@ public class PlayerController : MonoBehaviour {
 		if (other.tag == "EnemyProjectile" || other.tag == "Enemy") {
 			isDead = true;
 			Destroy (gameObject);
+			Destroy(transform.parent.gameObject);
 		}
 		if (other.tag == "PickupDualBlast") {
 			Debug.Log ("Dual blast picked up");

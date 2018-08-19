@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour {
 	public Text scoreMultiplier;
 	string log;
 	public PlayerController player;
+	public GameObject playerController;
 	public Button retryButton;
 	public Button quitButton;
 	bool highscoreFlash = false;
@@ -30,6 +31,8 @@ public class GameController : MonoBehaviour {
 		gameScore = 0;
 		retryButton.gameObject.SetActive (false);
 		quitButton.gameObject.SetActive (false);
+		playerController = GameObject.FindGameObjectWithTag ("Player");
+		player = playerController.GetComponent<PlayerController> ();
 	}
 	
 	// Update is called once per frame

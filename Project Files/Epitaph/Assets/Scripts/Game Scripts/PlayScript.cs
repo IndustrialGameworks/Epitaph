@@ -11,6 +11,10 @@ public class PlayScript : MonoBehaviour
 	public GameController game;
 	public Text versionText;
 
+	public Button selectCircle;
+	public Button selectTriangle;
+	public Button selectSquare;
+
 	void Start ()
 	{
 		Debug.Log(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
@@ -18,6 +22,11 @@ public class PlayScript : MonoBehaviour
 		{
 			versionText.text = "Version: " + System.Reflection.Assembly.GetExecutingAssembly ().GetName ().Version.ToString ();
 		}
+	}
+
+	void Update ()
+	{
+		enable ();
 	}
 
 	public void startGame()
@@ -33,5 +42,48 @@ public class PlayScript : MonoBehaviour
 	public void exitGame()
 	{
 		Application.Quit ();
+	}
+
+	public void SpawnCircle()
+	{
+		PlayerPrefs.SetInt ("playerType", 1);
+		Debug.Log ((PlayerPrefs.GetInt ("playerType").ToString ()));
+	}
+
+	public void SpawnTriangle ()
+	{
+		PlayerPrefs.SetInt ("playerType", 2);
+		Debug.Log ((PlayerPrefs.GetInt ("playerType").ToString ()));
+	}
+
+	public void SpawnSquare ()
+	{
+		PlayerPrefs.SetInt ("playerType", 3);
+		Debug.Log ((PlayerPrefs.GetInt ("playerType").ToString ()));
+	}
+
+	public void enable()
+	{
+		if (selectCircle != null && selectSquare != null && selectTriangle != null)
+		{
+			if (PlayerPrefs.GetInt ("playerType") == 1)
+			{
+				selectCircle.gameObject.SetActive (false);
+				selectTriangle.gameObject.SetActive (true);
+				selectSquare.gameObject.SetActive (true);
+			}
+			else if (PlayerPrefs.GetInt ("playerType") == 2) 
+			{
+				selectCircle.gameObject.SetActive (true);
+				selectTriangle.gameObject.SetActive (false);
+				selectSquare.gameObject.SetActive (true);
+			} 
+			else if (PlayerPrefs.GetInt ("playerType") == 3) 
+			{
+				selectCircle.gameObject.SetActive (true);
+				selectTriangle.gameObject.SetActive (true);
+				selectSquare.gameObject.SetActive (false);
+			}
+		}
 	}
 }
