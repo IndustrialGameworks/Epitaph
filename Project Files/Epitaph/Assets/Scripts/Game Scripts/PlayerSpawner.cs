@@ -11,19 +11,17 @@ public class PlayerSpawner : MonoBehaviour
 	void Start () 
 	{
 		Debug.Log ((PlayerPrefs.GetInt ("playerType").ToString ()));
-		if (PlayerPrefs.GetInt ("playerType") == 1) 
-		{
+		if (PlayerPrefs.GetInt ("playerType") == 1) {
 			var player = Instantiate (playerControllers [0], gameObject.transform.position, Quaternion.identity);
 			player.transform.SetParent (gameObject.transform);
-		}
-		else if (PlayerPrefs.GetInt ("playerType") == 2) 
-		{
+		} else if (PlayerPrefs.GetInt ("playerType") == 2) {
 			var player = Instantiate (playerControllers [1], gameObject.transform.position, Quaternion.identity);
 			player.transform.SetParent (gameObject.transform);
-		}
-		else if (PlayerPrefs.GetInt ("playerType") == 3) 
-		{
+		} else if (PlayerPrefs.GetInt ("playerType") == 3) {
 			var player = Instantiate (playerControllers [2], gameObject.transform.position, Quaternion.identity);
+			player.transform.SetParent (gameObject.transform);
+		} else if (PlayerPrefs.GetInt ("playerType") == 4) {
+			var player = Instantiate (playerControllers [3], gameObject.transform.position, Quaternion.identity);
 			player.transform.SetParent (gameObject.transform);
 		}
 	}

@@ -23,6 +23,7 @@ public class PlayScript : MonoBehaviour
 	public Button selectCircle;
 	public Button selectTriangle;
 	public Button selectSquare;
+	public Button selectFox;
 
 
 	Color Unchecked;
@@ -32,13 +33,14 @@ public class PlayScript : MonoBehaviour
 
 	void Start ()
 	{
-		if (selectCircle != null && selectSquare != null && selectTriangle != null && backButton !=null)
+		if (selectCircle != null && selectSquare != null && selectTriangle != null && selectFox != null && backButton !=null)
 		{
 			optionsText.gameObject.SetActive (false);
 			optionsBack.gameObject.SetActive (false);
 			selectCircle.gameObject.SetActive (false);
 			selectTriangle.gameObject.SetActive (false);
 			selectSquare.gameObject.SetActive (false);
+			selectFox.gameObject.SetActive (false);
 			backButton.gameObject.SetActive (false);
 		}
 
@@ -97,6 +99,7 @@ public class PlayScript : MonoBehaviour
 		selectCircle.gameObject.SetActive (false);
 		selectTriangle.gameObject.SetActive (false);
 		selectSquare.gameObject.SetActive (false);
+		selectFox.gameObject.SetActive (false);
 		optionsText.gameObject.SetActive (false);
 		optionsBack.gameObject.SetActive (false);
 	}
@@ -119,9 +122,15 @@ public class PlayScript : MonoBehaviour
 		Debug.Log ((PlayerPrefs.GetInt ("playerType").ToString ()));
 	}
 
+	public void SpawnFox ()
+	{
+		PlayerPrefs.SetInt ("playerType", 4);
+		Debug.Log ((PlayerPrefs.GetInt ("playerType").ToString ()));
+	}
+
 	public void enable()
 	{
-		if (selectCircle != null && selectSquare != null && selectTriangle != null && settingsButton.gameObject.activeSelf == false)
+		if (selectCircle != null && selectSquare != null && selectTriangle != null && selectFox !=null && settingsButton.gameObject.activeSelf == false)
 		{
 			if (PlayerPrefs.GetInt ("playerType") == 1)
 			{
@@ -132,9 +141,11 @@ public class PlayScript : MonoBehaviour
 				selectCircle.gameObject.SetActive (false);
 				selectTriangle.colors = cb1;
 				selectSquare.colors = cb1;
+				selectFox.colors = cb1;
 				selectCircle.gameObject.SetActive (true);
 				selectTriangle.gameObject.SetActive (true);
 				selectSquare.gameObject.SetActive (true);
+				selectFox.gameObject.SetActive (true);
 			}
 			else if (PlayerPrefs.GetInt ("playerType") == 2) 
 			{
@@ -142,18 +153,21 @@ public class PlayScript : MonoBehaviour
 				selectTriangle.colors = cb2;
 				selectTriangle.gameObject.SetActive (false);
 				selectSquare.colors = cb1;
+				selectFox.colors = cb1;
 //				selectCircle.gameObject.SetActive (true);
 //				selectTriangle.gameObject.SetActive (false);
 //				selectSquare.gameObject.SetActive (true);
 				selectCircle.gameObject.SetActive (true);
 				selectTriangle.gameObject.SetActive (true);
 				selectSquare.gameObject.SetActive (true);
+				selectFox.gameObject.SetActive (true);
 			} 
 			else if (PlayerPrefs.GetInt ("playerType") == 3) 
 			{
 				selectCircle.colors = cb1;
 				selectTriangle.colors = cb1;
 				selectSquare.colors = cb2;
+				selectFox.colors = cb1;
 				selectSquare.gameObject.SetActive (false);
 //				selectCircle.gameObject.SetActive (true);
 //				selectTriangle.gameObject.SetActive (true);
@@ -161,6 +175,23 @@ public class PlayScript : MonoBehaviour
 				selectCircle.gameObject.SetActive (true);
 				selectTriangle.gameObject.SetActive (true);
 				selectSquare.gameObject.SetActive (true);
+				selectFox.gameObject.SetActive (true);
+			}
+
+			else if (PlayerPrefs.GetInt ("playerType") == 4) 
+			{
+				selectCircle.colors = cb1;
+				selectTriangle.colors = cb1;
+				selectSquare.colors = cb1;
+				selectFox.colors = cb2;
+				selectFox.gameObject.SetActive (false);
+				//				selectCircle.gameObject.SetActive (true);
+				//				selectTriangle.gameObject.SetActive (true);
+				//				selectSquare.gameObject.SetActive (false);
+				selectCircle.gameObject.SetActive (true);
+				selectTriangle.gameObject.SetActive (true);
+				selectSquare.gameObject.SetActive (true);
+				selectFox.gameObject.SetActive (true);
 			}
 		}
 	}

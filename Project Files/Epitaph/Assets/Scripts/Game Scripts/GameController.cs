@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour {
 	public Button retryButton;
 	public Button quitButton;
 	bool highscoreFlash = false;
+	public Text multi;
 
 
 	public static float timer = 180.0f;
@@ -74,6 +75,7 @@ public class GameController : MonoBehaviour {
 		score.text = "score : " + log;
 		highscore.text = "HighScore : " + PlayerPrefs.GetFloat("HighScore", 0).ToString();
 		scoreMultiplier.text = multiplier + "x";
+		multi.text = "Multiplier";
 	}
 
 	void restart()
@@ -103,6 +105,7 @@ public class GameController : MonoBehaviour {
 		{
 			retryButton.gameObject.SetActive (true);
 			quitButton.gameObject.SetActive (true);
+			multi.gameObject.SetActive(false);
 			if (newHighScore == true) 
 			{
 				scoreEnd.text = "New HighScore";
@@ -115,6 +118,7 @@ public class GameController : MonoBehaviour {
 				highScoreEnd.text = highscore.text;
 				highscore.gameObject.SetActive (false);
 				scoreMultiplier.gameObject.SetActive (false);
+				//multi.gameObject.SetActive(false);
 			}
 			else 
 			{
