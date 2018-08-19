@@ -22,6 +22,7 @@ public class PlayScript : MonoBehaviour
 		{
 			versionText.text = "Version: " + System.Reflection.Assembly.GetExecutingAssembly ().GetName ().Version.ToString ();
 		}
+		PlayerPrefs.GetInt ("playerType", 1);
 	}
 
 	void Update ()
