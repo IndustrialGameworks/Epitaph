@@ -59,8 +59,8 @@ public class BeamDiamondController : MonoBehaviour {
 	void Status () {
 		if (health <= 0) {
 			
-			GameController.gameScore += (100 * GameController.multiplier);
-			theText.text = "+" + (100 * GameController.multiplier);
+			GameController.gameScore += (25 * GameController.multiplier);
+			theText.text = "+" + (25 * GameController.multiplier);
 			pointsText.transform.SetParent (BeamDiamondParent.transform);
 			isDestroyed = true;
 			GameController.multiplier += 1;
