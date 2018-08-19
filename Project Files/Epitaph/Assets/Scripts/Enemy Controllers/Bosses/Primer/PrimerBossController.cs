@@ -27,9 +27,14 @@ public class PrimerBossController : MonoBehaviour {
 	public GameObject coreDoor; //get the door object
 	public float coreDoorRotationSpeed = 5; //door rotation speed
 	float coreDoorRotationValue; //current door rotation
+	int nullElements;
+	int numberOfEnemiesInArray;
+	public GameObject core;
+
 
 	// Use this for initialization
 	void Start () {
+		numberOfEnemiesInArray = turrets.Length;
 		RandomGeneration ();
 		StartCoroutine ("BuildRandomLocation");
 	}
@@ -38,7 +43,8 @@ public class PrimerBossController : MonoBehaviour {
 	void Update () {
 		CoreDoorMovement ();
 		Movement ();
-
+		checkArray ();
+		StartCoroutine ("destroyThis");
 		if (constructLocation == true) {
 			RandomGeneration ();
 			constructLocation = false;
@@ -73,6 +79,32 @@ public class PrimerBossController : MonoBehaviour {
 			else {
 				//do nothing ,door rotation = 0
 			}
+		}
+	}
+
+	IEnumerator destroyThis ()
+	{
+		if (core == null) 
+		{
+			yield return new WaitForSeconds (0.5f);
+			Destroy (gameObject);
+		}
+	}
+
+	void checkArray ()
+	{
+		nullElements = 0;
+		for (int i = 0; i < numberOfEnemiesInArray; i++) 
+		{
+			if (turrets [i] == null) 
+			{
+				nullElements++;
+				//Debug.Log (nullElements.ToString ());
+			}
+		}
+		if (nullElements == numberOfEnemiesInArray) 
+		{
+			coreDoorOpen = true;
 		}
 	}
 

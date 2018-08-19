@@ -70,8 +70,8 @@ public class LotusEnemyController : MonoBehaviour {
 	void Status () {
 		if (health <= 0) {
 			
-			GameController.gameScore += (10 * GameController.multiplier);
-			theText.text = "+" + (10 * GameController.multiplier);
+			GameController.gameScore += (25 * GameController.multiplier);
+			theText.text = "+" + (25 * GameController.multiplier);
 			isDestroyed = true;
 			GameController.multiplier += 1;
 			GameController.timer = 180.0f;
