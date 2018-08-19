@@ -17,12 +17,13 @@ public class PlayScript : MonoBehaviour
 
 	void Start ()
 	{
+		PlayerPrefs.GetInt ("playerType", 1);
+		Debug.Log (PlayerPrefs.GetInt ("playerType", 1).ToString ());
 		Debug.Log(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 		if (versionText != null) 
 		{
 			versionText.text = "Version: " + System.Reflection.Assembly.GetExecutingAssembly ().GetName ().Version.ToString ();
 		}
-		PlayerPrefs.GetInt ("playerType", 1);
 	}
 
 	void Update ()
