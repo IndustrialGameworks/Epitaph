@@ -31,8 +31,16 @@ public class BurstEnemyController : MonoBehaviour {
 	public float burstDelay = 0.3f;
 	public GameObject projectile;
 
+	//pickup variables
+	public GameObject [] pickups;
+	int randomChance;
+	int pickupNumber;
+
 	// Use this for initialization
 	void Start () {
+		randomChance = Random.Range (0, 21);
+		pickupNumber = Random.Range (0, 2);
+
 		RandomGeneration ();
 		centerOfMass = origin.transform.position; //assigns center of object so that its projectiles can access it for their translation
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
@@ -66,6 +74,10 @@ public class BurstEnemyController : MonoBehaviour {
 			isDestroyed = true;
 			GameController.multiplier += 1;
 			GameController.timer = 180.0f;
+			if (randomChance == 10) 
+			{
+				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);
+			}
 			Destroy (gameObject);
 		}
 	}

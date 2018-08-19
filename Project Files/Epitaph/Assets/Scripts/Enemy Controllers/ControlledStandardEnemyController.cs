@@ -32,6 +32,11 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	TextMesh theText;
 	public bool isDestroyed = false;
 
+	//pickup variables
+	public GameObject [] pickups;
+	int randomChance;
+	int pickupNumber;
+
 	//editable variables
 	public WaveEnd waveParent;
 	//public GameObject root;
@@ -39,6 +44,9 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		waveParent = transform.root.GetComponent<WaveEnd> ();
+		randomChance = Random.Range (0, 21);
+		pickupNumber = Random.Range (0, 2);
+
 		delayBetweenProjectiles = waveParent.attackspeed;
 		StandardEnemyWaveController waveScript = enemyWaveController.GetComponent<StandardEnemyWaveController> ();//brings in script from standardwavecontroller.
 		navLocation1 = waveScript.navigationPoints [0].transform.position;//these call the positions of the 5 nav points.
@@ -140,6 +148,10 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 			isDestroyed = true;
 			GameController.multiplier += 1;
 			GameController.timer = 180.0f; 
+			if (randomChance == 10) 
+			{
+				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);
+			}
 			Destroy (gameObject);
 		}
 	}

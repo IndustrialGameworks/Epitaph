@@ -27,6 +27,11 @@ public class LotusEnemyController : MonoBehaviour {
 	TextMesh theText;
 	public bool isDestroyed;
 
+	//pickup variables
+	public GameObject [] pickups;
+	int randomChance;
+	int pickupNumber;
+
 	//Attack Variables
 	public float delayBetweenProjectiles = 1.5f;
 	public GameObject projectile;
@@ -34,6 +39,9 @@ public class LotusEnemyController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		RandomGeneration ();
+		randomChance = Random.Range (0, 21);
+		pickupNumber = Random.Range (0, 2);
+
 		centerOfMass = origin.transform.position; //assigns center of object so that its projectiles can access it for their translation
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
 		StartCoroutine ("BuildRandomLocation");
@@ -67,6 +75,10 @@ public class LotusEnemyController : MonoBehaviour {
 			isDestroyed = true;
 			GameController.multiplier += 1;
 			GameController.timer = 180.0f;
+			if (randomChance == 10) 
+			{
+				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);
+			}
 			Destroy (gameObject);
 		}
 	}

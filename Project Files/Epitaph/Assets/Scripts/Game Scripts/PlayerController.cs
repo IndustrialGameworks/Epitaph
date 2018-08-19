@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
 		maxX = topCorner.x;
 		minY = bottomCorner.y;
 		maxY = topCorner.y;
-		Debug.Log ("constraints: " + minX + " minimumX, " + maxX + " maximumX, " + minY + " minimumy, " + maxY + " maximumy.");
+		//Debug.Log ("constraints: " + minX + " minimumX, " + maxX + " maximumX, " + minY + " minimumy, " + maxY + " maximumy.");
 	}
 
 	void Movement () {

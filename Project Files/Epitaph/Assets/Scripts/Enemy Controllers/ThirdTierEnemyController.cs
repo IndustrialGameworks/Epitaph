@@ -40,12 +40,20 @@ public class ThirdTierEnemyController : MonoBehaviour {
 	TextMesh theText;
 	public bool isDestroyed = false;
 
+	//pickup variables
+	public GameObject [] pickups;
+	int randomChance;
+	int pickupNumber;
+
 
 	// Use this for initialization
 	void Start () {
 		//moveDown = (Random.value > 0.5f);
 		//StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
 		waveParent = transform.root.GetComponent<WaveEnd> ();
+		randomChance = Random.Range (0, 21);
+		pickupNumber = Random.Range (0, 2);
+
 		delayBetweenProjectiles = waveParent.attackspeed;
 		ThirdTierWave waveScript = enemyWaveController.GetComponent<ThirdTierWave> ();//brings in script from standardwavecontroller.
 		navLocation1 = waveScript.navigationPoints [0].transform.position;//these call the positions of the 5 nav points.
@@ -164,6 +172,10 @@ public class ThirdTierEnemyController : MonoBehaviour {
 			isDestroyed = true;
 			GameController.multiplier += 1;
 			GameController.timer = 180.0f; 
+			if (randomChance == 10) 
+			{
+				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);
+			}
 			Destroy (gameObject);
 		}
 	}

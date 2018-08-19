@@ -30,7 +30,7 @@ public class WaveEnd : MonoBehaviour
 			if (enemiesAliveInWave [i] == null) 
 			{
 				nullElements++;
-				Debug.Log (nullElements.ToString ());
+				//Debug.Log (nullElements.ToString ());
 			}
 		}
 		if (nullElements == numberOfEnemiesInArray) 

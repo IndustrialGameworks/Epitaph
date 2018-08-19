@@ -22,8 +22,15 @@ public class BeamDiamondController : MonoBehaviour {
 	TextMesh theText;
 	public bool isDestroyed = false;
 
+	//pickup variables
+	public GameObject [] pickups;
+	int randomChance;
+	int pickupNumber;
+
 	// Use this for initialization
 	void Start () {
+		randomChance = Random.Range (0, 21);
+		pickupNumber = Random.Range (0, 2);
 		playerToTrack = GameObject.FindWithTag ("Player");
 		theText = pointsText.GetComponent<TextMesh> ();
 	}
@@ -58,6 +65,10 @@ public class BeamDiamondController : MonoBehaviour {
 			isDestroyed = true;
 			GameController.multiplier += 1;
 			GameController.timer = 180.0f;
+			if (randomChance == 10) 
+			{
+				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);
+			}
 			Destroy (gameObject);
 		}
 	}
