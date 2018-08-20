@@ -120,15 +120,22 @@ public class PrimerBossController : MonoBehaviour {
 
 	IEnumerator firstStageAttack () {
 		while (true) {
+			float delayBetweenProjectiles = 0.2f;
 			yield return new WaitForSeconds (stageOneDoorDelay);
 			coreDoorOpen = true;
 			yield return new WaitForSeconds (4);
 			Instantiate (projectile1, internalEmitter1.transform.position, Quaternion.identity);
 			Instantiate (projectile1, internalEmitter2.transform.position, Quaternion.identity);
-			yield return new WaitForSeconds (0.3f);
+			yield return new WaitForSeconds (delayBetweenProjectiles);
 			Instantiate (projectile1, internalEmitter1.transform.position, Quaternion.identity);
 			Instantiate (projectile1, internalEmitter2.transform.position, Quaternion.identity);
-			yield return new WaitForSeconds (0.3f);
+			yield return new WaitForSeconds (delayBetweenProjectiles);
+			Instantiate (projectile1, internalEmitter1.transform.position, Quaternion.identity);
+			Instantiate (projectile1, internalEmitter2.transform.position, Quaternion.identity);
+			yield return new WaitForSeconds (delayBetweenProjectiles);
+			Instantiate (projectile1, internalEmitter1.transform.position, Quaternion.identity);
+			Instantiate (projectile1, internalEmitter2.transform.position, Quaternion.identity);
+			yield return new WaitForSeconds (delayBetweenProjectiles);
 			Instantiate (projectile1, internalEmitter1.transform.position, Quaternion.identity);
 			Instantiate (projectile1, internalEmitter2.transform.position, Quaternion.identity);
 			coreDoorOpen = false;
