@@ -20,10 +20,14 @@ public class PrimerBossController : MonoBehaviour {
 	float randomY;
 	Vector2 randomVector;
 
-	//Turret attack
+	//Attack
+	public GameObject internalEmitter1;
+	public GameObject internalEmitter2;
+	public GameObject projectile1;
 
 	//Core door control
 	public bool coreDoorOpen; //if true, door opens
+	public float stageOneDoorDelay = 5f;
 	public GameObject coreDoor; //get the door object
 	public float coreDoorRotationSpeed = 5; //door rotation speed
 	float coreDoorRotationValue; //current door rotation
@@ -37,6 +41,7 @@ public class PrimerBossController : MonoBehaviour {
 		numberOfEnemiesInArray = turrets.Length;
 		RandomGeneration ();
 		StartCoroutine ("BuildRandomLocation");
+		StartCoroutine ("firstStageAttack");
 	}
 	
 	// Update is called once per frame
@@ -111,6 +116,23 @@ public class PrimerBossController : MonoBehaviour {
 	void MovementChecks () {
 		currentLocationX = transform.position.x;
 		currentLocationY = transform.position.y;
+	}
+
+	IEnumerator firstStageAttack () {
+		while (true) {
+			yield return new WaitForSeconds (stageOneDoorDelay);
+			coreDoorOpen = true;
+			yield return new WaitForSeconds (4);
+			Instantiate (projectile1, internalEmitter1.transform.position, Quaternion.identity);
+			Instantiate (projectile1, internalEmitter2.transform.position, Quaternion.identity);
+			yield return new WaitForSeconds (0.3f);
+			Instantiate (projectile1, internalEmitter1.transform.position, Quaternion.identity);
+			Instantiate (projectile1, internalEmitter2.transform.position, Quaternion.identity);
+			yield return new WaitForSeconds (0.3f);
+			Instantiate (projectile1, internalEmitter1.transform.position, Quaternion.identity);
+			Instantiate (projectile1, internalEmitter2.transform.position, Quaternion.identity);
+			coreDoorOpen = false;
+		}
 	}
 
 	IEnumerator BuildRandomLocation () { //waits a set amount of time, the signals to construct a new new target vector
