@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PrimerBossController : MonoBehaviour {
 
+	public bool secondStage = false;
+	bool secondStageInitiated = false;
+
 	//Arrays
 	public GameObject [] turrets;
 
@@ -21,9 +24,12 @@ public class PrimerBossController : MonoBehaviour {
 	Vector2 randomVector;
 
 	//Attack
+	float delayBetweenProjectiles = 0.2f;
 	public GameObject internalEmitter1;
 	public GameObject internalEmitter2;
 	public GameObject projectile1;
+	public GameObject projectile2;
+	GameObject spawnedProjectile;
 
 	//Core door control
 	public bool coreDoorOpen; //if true, door opens
@@ -54,11 +60,18 @@ public class PrimerBossController : MonoBehaviour {
 			RandomGeneration ();
 			constructLocation = false;
 		}
+
+		if (secondStage == true && secondStageInitiated == false) {
+			StopCoroutine ("firstStageAttack");
+			StartCoroutine ("secondStageAttack");
+			secondStageInitiated = true;
+		}
 	}
 
 	void Movement () {
 		transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), randomVector, movementSpeed * Time.deltaTime);
 		MovementChecks ();
+
 	}
 	
 	void RandomGeneration () { //generates random x and y coords within bounds
@@ -110,6 +123,7 @@ public class PrimerBossController : MonoBehaviour {
 		if (nullElements == numberOfEnemiesInArray) 
 		{
 			coreDoorOpen = true;
+			secondStage = true;
 		}
 	}
 
@@ -120,7 +134,6 @@ public class PrimerBossController : MonoBehaviour {
 
 	IEnumerator firstStageAttack () {
 		while (true) {
-			float delayBetweenProjectiles = 0.2f;
 			yield return new WaitForSeconds (stageOneDoorDelay);
 			coreDoorOpen = true;
 			yield return new WaitForSeconds (4);
@@ -139,6 +152,20 @@ public class PrimerBossController : MonoBehaviour {
 			Instantiate (projectile1, internalEmitter1.transform.position, Quaternion.identity);
 			Instantiate (projectile1, internalEmitter2.transform.position, Quaternion.identity);
 			coreDoorOpen = false;
+		}
+	}
+
+
+	IEnumerator secondStageAttack () {
+		while (true) {
+			yield return new WaitForSeconds (0.2f);
+			Debug.Log ("2nd stage initialized");
+
+			spawnedProjectile = Instantiate (projectile2, internalEmitter1.transform.position, Quaternion.identity) as GameObject; //spawns projectile, returns gameObject
+			spawnedProjectile.gameObject.GetComponent<primerSecondStageProjectile>().spawnOrigin = internalEmitter1.gameObject; //assigns this enemy instance to the projectile as point of origin
+
+			spawnedProjectile = Instantiate (projectile2, internalEmitter2.transform.position, Quaternion.identity) as GameObject;
+			spawnedProjectile.gameObject.GetComponent<primerSecondStageProjectile>().spawnOrigin = internalEmitter2.gameObject;
 		}
 	}
 
