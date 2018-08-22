@@ -26,7 +26,9 @@ public class PrimerBossController : MonoBehaviour {
 	//Attack
 	float delayBetweenProjectiles = 0.2f;
 	public GameObject internalEmitter1;
+	public GameObject secondStageEmitter1;
 	public GameObject internalEmitter2;
+	public GameObject secondStageEmitter2;
 	public GameObject projectile1;
 	public GameObject projectile2;
 	GameObject spawnedProjectile;
@@ -163,9 +165,14 @@ public class PrimerBossController : MonoBehaviour {
 
 			spawnedProjectile = Instantiate (projectile2, internalEmitter1.transform.position, Quaternion.identity) as GameObject; //spawns projectile, returns gameObject
 			spawnedProjectile.gameObject.GetComponent<primerSecondStageProjectile>().spawnOrigin = internalEmitter1.gameObject; //assigns this enemy instance to the projectile as point of origin
+			spawnedProjectile = Instantiate (projectile2, secondStageEmitter1.transform.position, Quaternion.identity) as GameObject; //spawns projectile, returns gameObject
+			spawnedProjectile.gameObject.GetComponent<primerSecondStageProjectile>().spawnOrigin = secondStageEmitter1.gameObject; //assigns this enemy instance to the projectile as point of origin
+
 
 			spawnedProjectile = Instantiate (projectile2, internalEmitter2.transform.position, Quaternion.identity) as GameObject;
 			spawnedProjectile.gameObject.GetComponent<primerSecondStageProjectile>().spawnOrigin = internalEmitter2.gameObject;
+			spawnedProjectile = Instantiate (projectile2, secondStageEmitter2.transform.position, Quaternion.identity) as GameObject; //spawns projectile, returns gameObject
+			spawnedProjectile.gameObject.GetComponent<primerSecondStageProjectile>().spawnOrigin = secondStageEmitter2.gameObject; //assigns this enemy instance to the projectile as point of origin
 		}
 	}
 
