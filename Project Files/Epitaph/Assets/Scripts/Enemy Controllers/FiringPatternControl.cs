@@ -10,6 +10,8 @@ public class FiringPatternControl : MonoBehaviour {
 
 	public bool setNewNav = false;
 	public Vector2[] navPoints;
+	public Vector2 currentLocation;
+	public bool moveToNav = true;
 	public float speed = 2;
 	Vector2 startLocation;
 	public int randomInt = 0;
@@ -34,12 +36,29 @@ public class FiringPatternControl : MonoBehaviour {
 		}
 	}
 
+	void TrackLocal () {
+		currentLocation = new Vector2 (transform.position.x, transform.position.y);
+		float distanceToNav = Vector2.Distance (navPoints [randomInt], currentLocation);
+		if (distanceToNav <= 1) {
+			moveToNav = false;
+		}
+	}
+
 	IEnumerator Movement () {
 		while (true) {
-			transform.position = (Vector2.MoveTowards (new Vector2 (transform.position.x, transform.position.y), navPoints [randomInt], speed * Time.deltaTime)); //moves to navPoint
-			yield return new WaitForSeconds (0.1f);
-			transform.position = (Vector2.MoveTowards (new Vector2 (transform.position.x, transform.position.y), startLocation, speed * Time.deltaTime));	//moves back to original vector
-			setNewNav = true;
+			if (moveToNav == true) {
+				transform.position = (Vector2.MoveTowards (new Vector2 (transform.position.x, transform.position.y), navPoints [randomInt], speed * Time.deltaTime)); //moves to navPoint
+				yield return new WaitForSeconds (0.1f);
+			}
+			if (moveToNav == false) {
+				transform.position = (Vector2.MoveTowards (new Vector2 (transform.position.x, transform.position.y), startLocation, speed * Time.deltaTime));	//moves back to original vector
+				yield return new WaitForSeconds (0.1f);
+			}
+
+			if (moveToNav == false && setNewNav == false) {
+				setNewNav = true;
+				moveToNav = true;
+			}
 			yield return new WaitForSeconds (0.1f);
 		}
 	}
