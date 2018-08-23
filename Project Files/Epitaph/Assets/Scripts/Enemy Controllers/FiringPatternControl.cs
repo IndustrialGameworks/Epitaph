@@ -37,7 +37,7 @@ public class FiringPatternControl : MonoBehaviour {
 	}
 
 	void TrackLocal () {
-		currentLocation = new Vector2 (transform.position.x, transform.position.y);
+		currentLocation = new Vector2 (transform.localPosition.x, transform.localPosition.y);
 		float distanceToNav = Vector2.Distance (navPoints [randomInt], currentLocation);
 		if (distanceToNav <= 1) {
 			moveToNav = false;
@@ -47,12 +47,12 @@ public class FiringPatternControl : MonoBehaviour {
 	IEnumerator Movement () {
 		while (true) {
 			if (moveToNav == true) {
-				transform.position = (Vector2.MoveTowards (new Vector2 (transform.position.x, transform.position.y), navPoints [randomInt], speed * Time.deltaTime)); //moves to navPoint
-				yield return new WaitForSeconds (0.1f);
+				transform.localPosition = (Vector2.MoveTowards (new Vector2 (transform.localPosition.x, transform.localPosition.y), navPoints [randomInt], speed * Time.deltaTime)); //moves to navPoint
+				yield return new WaitForSeconds (0.0f);
 			}
 			if (moveToNav == false) {
-				transform.position = (Vector2.MoveTowards (new Vector2 (transform.position.x, transform.position.y), startLocation, speed * Time.deltaTime));	//moves back to original vector
-				yield return new WaitForSeconds (0.1f);
+				transform.localPosition = (Vector2.MoveTowards (new Vector2 (transform.localPosition.x, transform.localPosition.y), startLocation, speed * Time.deltaTime));	//moves back to original vector
+				yield return new WaitForSeconds (0.0f);
 			}
 
 			if (moveToNav == false && setNewNav == false) {
