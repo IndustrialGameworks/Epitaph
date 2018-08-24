@@ -161,7 +161,7 @@ public class PrimerBossController : MonoBehaviour {
 	IEnumerator secondStageAttack () {
 		while (true) {
 			yield return new WaitForSeconds (0.2f);
-			Debug.Log ("2nd stage initialized");
+			//Debug.Log ("2nd stage initialized");
 
 			spawnedProjectile = Instantiate (projectile2, internalEmitter1.transform.position, Quaternion.identity) as GameObject; //spawns projectile, returns gameObject
 			spawnedProjectile.gameObject.GetComponent<primerSecondStageProjectile>().spawnOrigin = internalEmitter1.gameObject; //assigns this enemy instance to the projectile as point of origin

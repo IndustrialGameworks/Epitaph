@@ -10,7 +10,7 @@ public class PlayerSpawner : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		Debug.Log ((PlayerPrefs.GetInt ("playerType").ToString ()));
+		//Debug.Log ((PlayerPrefs.GetInt ("playerType").ToString ()));
 		if (PlayerPrefs.GetInt ("playerType") == 1) {
 			var player = Instantiate (playerControllers [0], gameObject.transform.position, Quaternion.identity);
 			player.transform.SetParent (gameObject.transform);

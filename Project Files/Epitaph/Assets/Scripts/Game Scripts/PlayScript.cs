@@ -50,7 +50,7 @@ public class PlayScript : MonoBehaviour
 			PlayerPrefs.SetInt ("playerType", 1);
 		}
 		cb2.normalColor = Checked;
-		Debug.Log (PlayerPrefs.GetInt ("playerType", 1).ToString ());
+		//Debug.Log (PlayerPrefs.GetInt ("playerType", 1).ToString ());
 		Debug.Log(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 		if (versionText != null) 
 		{

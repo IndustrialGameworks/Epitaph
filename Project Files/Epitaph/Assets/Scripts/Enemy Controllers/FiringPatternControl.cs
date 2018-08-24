@@ -6,61 +6,89 @@ using UnityEngine;
 //Must be attached to center of mass!
 
 
-public class FiringPatternControl : MonoBehaviour {
+public class FiringPatternControl : MonoBehaviour 
+{
 
-	public bool setNewNav = false;
 	public Vector2[] navPoints;
 	public Vector2 currentLocation;
-	public bool moveToNav = true;
+	public bool movingToNav = true;
 	public float speed = 2;
-	Vector2 startLocation;
-	public int randomInt = 0;
-	int arraySize = 0;
+	public int count = 0;
+
+	//calls the boss controller script
+	public PrimerBossController controller;
+
+	//nav variables
+	float nav1Y;
+	float nav2Y;
+	float nav3Y;
+	float nav3X;
+	float nav4X;
+
 
 	// Use this for initialization
-	void Start () {
-		startLocation = transform.localPosition;
-		StartCoroutine ("Movement");
-		arraySize = navPoints.Length;
+	void Start () 
+	{
+		nav1Y = navPoints [0].y;
+		nav2Y = navPoints [1].y;
+		nav3Y = navPoints [2].y;
+		nav3X = navPoints [2].x;
+		nav4X = navPoints [3].x;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		GenerateRandoms ();
-	}
-
-	void GenerateRandoms () { //gets new random to select from the navPoints array
-		if (setNewNav == true) {
-			randomInt = (Random.Range (0, arraySize));
-			setNewNav = false;
-		}
-	}
-
-	void TrackLocal () {
+	void Update () 
+	{
 		currentLocation = new Vector2 (transform.localPosition.x, transform.localPosition.y);
-		float distanceToNav = Vector2.Distance (navPoints [randomInt], currentLocation);
-		if (distanceToNav <= 1) {
-			moveToNav = false;
+		if (controller.secondStage == true) 
+		{
+			movement ();
 		}
 	}
 
-	IEnumerator Movement () {
-		while (true) {
-			if (moveToNav == true) {
-				transform.localPosition = (Vector2.MoveTowards (new Vector2 (transform.localPosition.x, transform.localPosition.y), navPoints [randomInt], speed * Time.deltaTime)); //moves to navPoint
-				yield return new WaitForSeconds (0.0f);
+	void movement ()
+	{
+		if (count < 6 && movingToNav == true) 
+		{
+			transform.localPosition = (Vector2.MoveTowards (new Vector2 (transform.localPosition.x, transform.localPosition.y), navPoints [0], speed * Time.deltaTime)); //moves to navPoint
+			if (currentLocation.y == nav1Y) 
+			{
+				count++;
+				movingToNav = false;
 			}
-			if (moveToNav == false) {
-				transform.localPosition = (Vector2.MoveTowards (new Vector2 (transform.localPosition.x, transform.localPosition.y), startLocation, speed * Time.deltaTime));	//moves back to original vector
-				yield return new WaitForSeconds (0.0f);
+		} 
+		else if (count < 6 && movingToNav == false) 
+		{
+			transform.localPosition = (Vector2.MoveTowards (new Vector2 (transform.localPosition.x, transform.localPosition.y), navPoints [1], speed * Time.deltaTime)); //moves to navPoint
+			if (currentLocation.y == nav2Y) 
+			{
+				count++;
+				movingToNav = true;
 			}
-
-			if (moveToNav == false && setNewNav == false) {
-				setNewNav = true;
-				moveToNav = true;
+		} 
+		else if (count == 6) 
+		{
+			transform.localPosition = (Vector2.MoveTowards (new Vector2 (transform.localPosition.x, transform.localPosition.y), navPoints [2], speed * Time.deltaTime)); //moves to navPoint
+			if (currentLocation.y == nav3Y) 
+			{
+				count = 7;
 			}
-			yield return new WaitForSeconds (0.1f);
+		} 
+		else if (count == 7) 
+		{
+			transform.localPosition = (Vector2.MoveTowards (new Vector2 (transform.localPosition.x, transform.localPosition.y), navPoints [3], speed * Time.deltaTime)); //moves to navPoint
+			if (currentLocation.x == nav4X) 
+			{
+				count = 8;
+			}
+		} 
+		else if (count == 8) 
+		{
+			transform.localPosition = (Vector2.MoveTowards (new Vector2 (transform.localPosition.x, transform.localPosition.y), navPoints [2], speed * Time.deltaTime)); //moves to navPoint
+			if (currentLocation.x == nav3X)
+			{
+				count = 0;
+			}
 		}
 	}
-
 }
