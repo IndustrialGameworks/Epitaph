@@ -14,6 +14,7 @@ public class spawnEmitter : MonoBehaviour {
 	public GameObject[] basicWave2;
 	public GameObject[] basicWave3;
 	public GameObject[] basicWave4;
+	public GameObject[] basicWave5;
 
 	public GameObject [] enemy;
 	public GameObject [] specialEnemy;
@@ -71,7 +72,7 @@ public class spawnEmitter : MonoBehaviour {
 
 	//generates random numbers to call items from the arrays
 	void RandomGenerator () {
-		randomSelector = Random.Range (0, 4); //selects for waves!!!
+		randomSelector = Random.Range (0, 5); //selects for waves!!!
 
 		randomEmitterNumber = Random.Range (0, emitterArraySize);
 		topBottomRandomEmitterNumber = Random.Range (0, topEmitterArraySize);
@@ -135,6 +136,10 @@ public class spawnEmitter : MonoBehaviour {
 			if (randomSelector == 3) {
 				Instantiate (basicWave4 [0], emitters [4].transform.position, Quaternion.identity);
 				Instantiate (basicWave4 [1], emitters [4].transform.position, Quaternion.identity);
+			}
+			if (randomSelector == 4) {
+				Instantiate (basicWave5 [0], emitters [4].transform.position, Quaternion.identity);
+				Instantiate (basicWave5 [1], emitters [4].transform.position, Quaternion.identity);
 			}
 			yield return new WaitForSeconds (secondsBetweenEnemies);
 		}
