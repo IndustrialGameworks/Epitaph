@@ -43,8 +43,8 @@ public class LotusEnemyController : MonoBehaviour {
 		pickupNumber = Random.Range (0, 2);
 
 		centerOfMass = origin.transform.position; //assigns center of object so that its projectiles can access it for their translation
-		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
 		StartCoroutine ("BuildRandomLocation");
+		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
 		theText = pointsText.GetComponent<TextMesh>();//calls textmesh.
 	}
 	
