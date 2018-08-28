@@ -45,9 +45,14 @@ public class ThirdTierEnemyController : MonoBehaviour {
 	int randomChance;
 	int pickupNumber;
 
+    //color variables
+    Color hit = new Color(145f / 255f, 50f / 255f, 50f / 255f, 1);
+    Color standard = Color.white;
+    SpriteRenderer tierThreeSprite;
 
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start () {
 		//moveDown = (Random.value > 0.5f);
 		//StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
 		waveParent = transform.root.GetComponent<WaveEnd> ();
@@ -62,6 +67,7 @@ public class ThirdTierEnemyController : MonoBehaviour {
 		navLocation4 = waveScript.navigationPoints [3].transform.position;
 		navLocation5 = waveScript.navigationPoints [4].transform.position;
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
+        tierThreeSprite = GetComponent<SpriteRenderer>();
 		theText = pointsText.GetComponent<TextMesh>();//calls textmesh.
 	}
 	
@@ -204,7 +210,8 @@ public class ThirdTierEnemyController : MonoBehaviour {
 		if (other.tag == "PlayerProjectile") {
 			health -= 50;
 			Destroy (other.gameObject);
-		}
+            StartCoroutine("changeColor");
+        }
 	}
 
 	void OnBecameInvisible ()
@@ -212,4 +219,11 @@ public class ThirdTierEnemyController : MonoBehaviour {
 		isDestroyed = true;
 		Destroy (gameObject);
 	}
+
+    IEnumerator changeColor()
+    {
+        tierThreeSprite.color = hit;
+        yield return new WaitForSeconds(0.125f);
+        tierThreeSprite.color = standard;
+    }
 }

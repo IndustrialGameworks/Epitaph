@@ -27,12 +27,18 @@ public class BeamDiamondController : MonoBehaviour {
 	int randomChance;
 	int pickupNumber;
 
-	// Use this for initialization
-	void Start () {
+    //color variables
+    Color hit = new Color(145f / 255f, 50f / 255f, 50f / 255f, 1);
+    Color standard = Color.white;
+    SpriteRenderer beamdiamondSprite;
+
+    // Use this for initialization
+    void Start () {
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
 		playerToTrack = GameObject.FindWithTag ("Player");
-		theText = pointsText.GetComponent<TextMesh> ();
+        beamdiamondSprite = GetComponent<SpriteRenderer>();
+        theText = pointsText.GetComponent<TextMesh> ();
 	}
 	
 	// Update is called once per frame
@@ -79,11 +85,19 @@ public class BeamDiamondController : MonoBehaviour {
 		{
 			health -= 50;
 			Destroy (other.gameObject);
-		}
+            StartCoroutine("changeColor");
+        }
 	}
 
+    IEnumerator changeColor()
+    {
+        beamdiamondSprite.color = hit;
+        yield return new WaitForSeconds(0.125f);
+        beamdiamondSprite.color = standard;
+    }
 
-	IEnumerator Attack () {
+
+    IEnumerator Attack () {
 		isFiring = true;
 		indicatorBeam.gameObject.GetComponent<SpriteRenderer> ().enabled = true;
 		yield return new WaitForSeconds (indicatorFireDelay);

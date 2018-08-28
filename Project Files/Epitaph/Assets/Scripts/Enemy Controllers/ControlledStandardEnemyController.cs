@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ControlledStandardEnemyController : MonoBehaviour {
 
-	public int health = 100;
+	int health = 50;
 
 	//Movement Variables
 	public float movementSpeed = 3;
@@ -39,10 +39,15 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 
 	//editable variables
 	public WaveEnd waveParent;
-	//public GameObject root;
+    //public GameObject root;
 
-	// Use this for initialization
-	void Start () {
+    //color variables
+    Color hit = new Color(145f / 255f, 50f / 255f, 50f / 255f, 1);
+    Color standard = Color.white;
+    SpriteRenderer tierOneSprite;
+
+    // Use this for initialization
+    void Start () {
 		waveParent = transform.root.GetComponent<WaveEnd> ();
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
@@ -55,7 +60,8 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 		navLocation4 = waveScript.navigationPoints [3].transform.position;
 		navLocation5 = waveScript.navigationPoints [4].transform.position;
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
-		theText = pointsText.GetComponent<TextMesh>();//calls textmesh.
+        tierOneSprite = GetComponent<SpriteRenderer>();
+        theText = pointsText.GetComponent<TextMesh>();//calls textmesh.
 	}
 	
 	// Update is called once per frame
@@ -166,9 +172,10 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other)
 	{
 		if (other.tag == "PlayerProjectile") {
-			health -= 50;
+            StartCoroutine("changeColor");
+            health -= 50;
 			Destroy (other.gameObject);
-		}
+        }
 	}
 
 	void OnBecameInvisible ()
@@ -176,4 +183,11 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 		isDestroyed = true;
 		Destroy (gameObject);
 	}
+
+    IEnumerator changeColor()
+    {
+        tierOneSprite.color = hit;
+        yield return new WaitForSeconds(0.125f);
+        tierOneSprite.color = standard;
+    }
 }

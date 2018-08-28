@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class touchControlScript : MonoBehaviour 
 {
@@ -19,8 +20,13 @@ public class touchControlScript : MonoBehaviour
     //reference to player.
     public PlayerController Player;
 
-	// Use this for initialization
-	void Start () 
+    //variables to modify color.
+    Color cb2 = new Color (180f/255f,180f/255f, 180f/255f , 1f);
+    Color cb1 = Color.white;
+    SpriteRenderer touchSprite;
+
+    // Use this for initialization
+    void Start () 
 	{
 		//sets the top and bottom corner vector to equal loaction of top and bottom corners.
 		bottomCorner = Camera.main.ViewportToWorldPoint(new Vector2(0,0));
@@ -29,7 +35,10 @@ public class touchControlScript : MonoBehaviour
         //sets the default x position of this object to be the minimum x position + 1.
         Vector2 startPosition = new Vector2(minX + 1, transform.position.y);
         transform.position = startPosition;
-	}
+        //gets the sprite renderer for this game object.
+        touchSprite = GetComponent<SpriteRenderer>();
+        touchSprite.color = cb1;
+    }
 	
 	// Update is called once per frame
 	void Update () 
@@ -49,7 +58,8 @@ public class touchControlScript : MonoBehaviour
 			case TouchPhase.Began://on touch.
 				if (GetComponent<Collider2D> () == Physics2D.OverlapPoint (touchPos)) //check if the touch overlaps the collider of the object this script is attached too.
 				{
-					dragging = true;//set dragging to true so the moved phase can begin.
+                    dragging = true;//set dragging to true so the moved phase can begin.
+                    touchSprite.color = cb2; //when touched turns the object a darker shade of grey to show its touched.
 				}
 				break;
 
@@ -57,14 +67,14 @@ public class touchControlScript : MonoBehaviour
 				if (GetComponent<Collider2D> () == Physics2D.OverlapPoint (touchPos) && dragging == true)//check if the touch overlaps the collider of the object this script is attached too and if dragging is set to true.
 				{
 					Vector2 currentPosition = Camera.main.ScreenToWorldPoint (touch.position);//gets the current position of the finger and store in vector 2.
-
-					transform.position = currentPosition;//moves the position of this gameobject to equal the position of the finger.
+                    transform.position = currentPosition;//moves the position of this gameobject to equal the position of the finger.
 				}
 				break;	
 
 			case TouchPhase.Ended://on lifted finger.
 				dragging = false; //set dragging to false.
                 boundaries();
+                touchSprite.color = cb1;//return to default color once released.
                 break;
 			}
 		}

@@ -59,15 +59,18 @@ public class PrimerTurret : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if (other.tag == "PlayerProjectile") {
+		if (other.tag == "PlayerProjectile")
+        {
 			health -= 50;
 			Destroy (other.gameObject);
 			StartCoroutine ("changeColor");
 		}
 	}
 
-	IEnumerator Attack () {
-		while (true) {
+	IEnumerator Attack ()
+    {
+		while (true)
+        {
 			yield return new WaitForSeconds (delayBeforeStart);
 			spawnedProjectile = Instantiate (projectile, emitter.transform.position, Quaternion.identity) as GameObject; //spawns projectile, returns gameObject
 			spawnedProjectile.gameObject.GetComponent<primerProjectile>().spawnOrigin = gameObject; //assigns this enemy instance to the projectile as point of origin

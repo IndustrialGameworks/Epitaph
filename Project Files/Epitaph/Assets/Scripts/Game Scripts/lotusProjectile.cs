@@ -11,7 +11,8 @@ public class lotusProjectile : MonoBehaviour {
 	Vector2 storedCenterOfMass; //center of mass of instantiator upon instantiation
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		storedCenterOfMass = spawnOrigin.GetComponent<LotusEnemyController> ().centerOfMass; //gets the center of mass from the reference to its originator upon creation, otherwise it would be a non-satic value
 	}
 	

@@ -36,8 +36,13 @@ public class BurstEnemyController : MonoBehaviour {
 	int randomChance;
 	int pickupNumber;
 
-	// Use this for initialization
-	void Start () {
+    //color variables
+    Color hit = new Color(145f / 255f, 50f / 255f, 50f / 255f, 1);
+    Color standard = Color.white;
+    SpriteRenderer burstSprite;
+
+    // Use this for initialization
+    void Start () {
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
 
@@ -45,6 +50,7 @@ public class BurstEnemyController : MonoBehaviour {
 		centerOfMass = origin.transform.position; //assigns center of object so that its projectiles can access it for their translation
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
 		StartCoroutine ("BuildRandomLocation");
+        burstSprite = GetComponent<SpriteRenderer>();
 		theText = pointsText.GetComponent<TextMesh>();//calls textmesh.
 	}
 	
@@ -164,7 +170,8 @@ public class BurstEnemyController : MonoBehaviour {
 		if (other.tag == "PlayerProjectile") {
 			health -= 50;
 			Destroy (other.gameObject);
-		}
+            StartCoroutine("changeColor");
+        }
 	}
 
 	void OnBecameInvisible ()
@@ -172,4 +179,11 @@ public class BurstEnemyController : MonoBehaviour {
 		isDestroyed = true;
 		Destroy (gameObject);
 	}
+
+    IEnumerator changeColor()
+    {
+        burstSprite.color = hit;
+        yield return new WaitForSeconds(0.125f);
+        burstSprite.color = standard;
+    }
 }
