@@ -16,20 +16,24 @@ public class touchControlScript : MonoBehaviour
 	Vector2 bottomCorner;
 	Vector2 topCorner;
 
+    //reference to player.
+    public PlayerController Player;
 
 	// Use this for initialization
 	void Start () 
 	{
 		//sets the top and bottom corner vector to equal loaction of top and bottom corners.
 		bottomCorner = Camera.main.ViewportToWorldPoint(new Vector2(0,0));
-		topCorner = Camera.main.ViewportToWorldPoint(new Vector2(1,1));	
+		topCorner = Camera.main.ViewportToWorldPoint(new Vector2(1,1));
+        setBounds();
+        //sets the default x position of this object to be the minimum x position + 1.
+        Vector2 startPosition = new Vector2(minX + 1, transform.position.y);
+        transform.position = startPosition;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		setBounds ();
-		boundaries ();
 		ControllerPosition (); 
 
 		//check if touchcount > 0 so if its been touched.
@@ -60,7 +64,8 @@ public class touchControlScript : MonoBehaviour
 
 			case TouchPhase.Ended://on lifted finger.
 				dragging = false; //set dragging to false.
-				break;
+                boundaries();
+                break;
 			}
 		}
 	}
@@ -105,4 +110,36 @@ public class touchControlScript : MonoBehaviour
 		controllerX = transform.position.x;
 		controllerY = transform.position.y;
 	}
+
+    void OnTriggerEnter2D(Collider2D other)//if a pickup collides with the touch area.
+    {
+        if (other.tag == "PickupDualBlast")//if the pickup is a dual blast.
+        {
+            Player.doubleEmitter = true;//enables / disables certain emmiters.
+            Player.singleEmitter = false;
+            Player.tripleEmitter = false;
+
+            Player.pickupLength = 5;
+            Player.StopCoroutine("DualAttack");//stops the dual attack and timer if they pick up two in a row.
+            Player.StopCoroutine("PickupTimer");
+            Player.StartCoroutine("DualAttack"); //starts a coroutine running for firing projectiles.
+            Player.StartCoroutine("PickupTimer");//starts coroutine to time the pickup.
+            Player.StopCoroutine("Attack");//stops attack and triple attack coroutines.
+            Player.StopCoroutine("TripleAttack");
+        }
+        if (other.tag == "PickupTripleBlast")//if the pickup is a tri blast.
+        {
+            Player.tripleEmitter = true;//enables / disables certain emmiters.
+            Player.doubleEmitter = false;
+            Player.singleEmitter = false;
+
+            Player.pickupLength = 5;
+            Player.StopCoroutine("TripleAttack");//stops the tri attack and timer if they pick up two in a row.
+            Player.StopCoroutine("PickupTimer");
+            Player.StartCoroutine("TripleAttack"); //starts a coroutine running for firing projectiles
+            Player.StartCoroutine("PickupTimer");//starts coroutine to time the pickup.
+            Player.StopCoroutine("Attack");//stops attack and dual attack coroutines.
+            Player.StopCoroutine("DualAttack");
+        }
+    }
 }

@@ -4,26 +4,34 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour {
-
+public class GameController : MonoBehaviour
+{
+    //Integers.
 	public static int gameScore = 0;
-	public Text score;
+    public static int multiplier = 1;
+
+    //Floats.
+    public static float timer = 180.0f;
+    public static float resetTimer = 180.0f;
+
+    //UI Elements.
+    public Text score;
 	public Text highscore;
 	public Text scoreEnd;
 	public Text highScoreEnd;
-	public static int multiplier = 1;
-	bool newHighScore = false;
-	public Text scoreMultiplier;
+    public Text scoreMultiplier;
+    public Text multi;
+    public Button retryButton;
+    public Button quitButton;
+
+    //Booleans.
+    bool highscoreFlash = false;
+    bool newHighScore = false;
 	string log;
+
+    //Reference to player.
 	public PlayerController player;
 	public GameObject playerController;
-	public Button retryButton;
-	public Button quitButton;
-	bool highscoreFlash = false;
-	public Text multi;
-
-
-	public static float timer = 180.0f;
 
 	// Use this for initialization
 	void Start () 
@@ -39,10 +47,7 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-//		DisplayScore ();
-//		displayMultiplier ();
 		timer = timer - 1.0f;
-//		Debug.Log (timer.ToString ());
 		scoreTracking ();
 		restart ();
 		resetHighScore ();
@@ -50,11 +55,6 @@ public class GameController : MonoBehaviour {
 		endGame ();
 		multiplierDegradation ();
 	}
-
-//	void DisplayScore () 
-//	{
-//		Debug.Log ("Score " + gameScore);
-//	}
 
 	void scoreTracking ()
 	{
@@ -118,7 +118,6 @@ public class GameController : MonoBehaviour {
 				highScoreEnd.text = highscore.text;
 				highscore.gameObject.SetActive (false);
 				scoreMultiplier.gameObject.SetActive (false);
-				//multi.gameObject.SetActive(false);
 			}
 			else 
 			{
@@ -147,56 +146,51 @@ public class GameController : MonoBehaviour {
 		if (multiplier == 10 && timer <= 0.0f) 
 		{
 			multiplier = 1;
-			timer = 180.0f;
+			timer = resetTimer;
 		}
 		if (multiplier == 9 && timer <= 0.0f) 
 		{
 			multiplier = 1;
-			timer = 180.0f;
+			timer = resetTimer;
 		}
 		if (multiplier == 8 && timer <= 0.0f) 
 		{
 			multiplier = 1;
-			timer = 180.0f;
+			timer = resetTimer;
 		}
 		if (multiplier == 7 && timer <= 0.0f) 
 		{
 			multiplier = 1;
-			timer = 180.0f;
+			timer = resetTimer;
 		}
 		if (multiplier == 6 && timer <= 0.0f) 
 		{
 			multiplier = 1;
-			timer = 180.0f;
+			timer = resetTimer;
 		}
 		if (multiplier == 5 && timer <= 0.0f) 
 		{
 			multiplier = 1;
-			timer = 180.0f;
+			timer = resetTimer;
 		}
 		if (multiplier == 4 && timer <= 0.0f) 
 		{
 			multiplier = 1;
-			timer = 180.0f;
+			timer = resetTimer;
 		}
 		if (multiplier == 3 && timer <= 0.0f) 
 		{
 			multiplier = 1;
-			timer = 180.0f;
+			timer = resetTimer;
 		}
 		if (multiplier == 2 && timer <= 0.0f) 
 		{
 			multiplier = 1;
-			timer = 180.0f;
+			timer = resetTimer;
 		}
 		if (multiplier == 1) 
 		{
-			timer = 180.0f;
+			timer = resetTimer;
 		}
 	}
-
-//	void displayMultiplier ()
-//	{
-//		Debug.Log ("multiplier: " + multiplier);
-//	}
 }

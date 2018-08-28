@@ -18,9 +18,10 @@ public class spawnEmitter : MonoBehaviour
 	public float secondsBetweenSpecialEnemies;
 	public float secondsBetweenPickups = 1f;
 	public float secondsBeforeBegin = 4f;
+    private float maxX;
 
-	//integers
-	int randomSelector = 0;
+    //integers
+    int randomSelector = 0;
 	int specialEnemyArraySize;
 	int currentRandomEnemy;
 	int currentRandomSpecialEnemy;
@@ -48,15 +49,22 @@ public class spawnEmitter : MonoBehaviour
 	GameObject secondCurrentEmitter;
 	GameObject specialCurrentEmitter;
 
+    //vectors for screen boundaries.
+    Vector2 topCorner;
 
-	// Use this for initialization
-	void Start () 
+
+    // Use this for initialization
+    void Start () 
 	{
 		GetArrayDetails ();
 		currentEmitter = emitters [1]; //needs to be assigned on start
 		secondCurrentEmitter = emitters [2]; //needs to be assigned on start
 		StartCoroutine ("Initialization");
-	}
+        topCorner = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+        setBounds();
+        Vector2 startPosition = new Vector2(maxX + 1, transform.position.y);
+        transform.position = startPosition;
+    }
 	
 	// Update is called once per frame
 	void Update () 
@@ -65,8 +73,14 @@ public class spawnEmitter : MonoBehaviour
 		boss ();
 	}
 
-	//gets the details of array length at startup and then saves them to variables for use by the random generators
-	void GetArrayDetails () 
+    void setBounds()
+    {
+        //takes the minimum and maximum x and y values from the top and bottom corner vectors.
+        maxX = topCorner.x;
+    }
+
+    //gets the details of array length at startup and then saves them to variables for use by the random generators
+    void GetArrayDetails () 
 	{
 		emitterArraySize = emitters.Length ;
 		topEmitterArraySize = topEmitters.Length;

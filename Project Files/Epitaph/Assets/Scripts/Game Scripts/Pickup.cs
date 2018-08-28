@@ -2,28 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pickup : MonoBehaviour {
+public class Pickup : MonoBehaviour
+{
 
 	public float movementSpeed = 10;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		Movement (); 
 	}
 
-	void Movement () {
+	void Movement ()
+    {//moves the pickup across the screen.
 		transform.Translate (Vector2.left * movementSpeed * Time.deltaTime);
 	}
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if (other.tag == "Player") {
-			Destroy (gameObject);
+		if (other.tag == "Player" || other.tag == "PlayerTouchController")//checks if the pickup has collided with an object with the tag player or playerTouchController.
+        {
+			Destroy (gameObject);//destroys this gameObject.
 		}
 	}
 }
