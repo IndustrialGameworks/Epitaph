@@ -17,6 +17,9 @@ public class PlayScript : MonoBehaviour
 	public Button backButton;
 	public Image industrialLogo;
 
+    public Button signIntoPlay;
+    public Button showLeaderboard;
+    public Text authText;
 
 	public Text optionsText;
 	public Image optionsBack;
@@ -27,6 +30,8 @@ public class PlayScript : MonoBehaviour
 
     public Image loadingImage;
     public Text loadingText1;
+
+    public bool enableLeadeboard = true;
 
 	Color Unchecked;
 	Color Checked = Color.gray;
@@ -89,7 +94,12 @@ public class PlayScript : MonoBehaviour
 
 	public void openSettings ()
 	{
-		settingsButton.gameObject.SetActive (false);
+        enableLeadeboard = false;
+
+        settingsButton.gameObject.SetActive (false);
+        signIntoPlay.gameObject.SetActive(false);
+        showLeaderboard.gameObject.SetActive(false);
+        authText.gameObject.SetActive(false);
 		playButton.gameObject.SetActive (false);
 		quitButton.gameObject.SetActive (false);
 		industrialLogo.gameObject.SetActive (false);
@@ -100,8 +110,13 @@ public class PlayScript : MonoBehaviour
 
 	public void back ()
 	{
-		settingsButton.gameObject.SetActive (true);
-		playButton.gameObject.SetActive (true);
+        enableLeadeboard = true;
+
+        settingsButton.gameObject.SetActive (true);
+        signIntoPlay.gameObject.SetActive(true);
+        showLeaderboard.gameObject.SetActive(true);
+        authText.gameObject.SetActive(true);
+        playButton.gameObject.SetActive (true);
 		quitButton.gameObject.SetActive (true);
 		industrialLogo.gameObject.SetActive (true);
 		backButton.gameObject.SetActive (false);

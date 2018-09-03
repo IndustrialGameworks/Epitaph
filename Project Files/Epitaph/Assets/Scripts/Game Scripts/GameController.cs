@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using UnityEngine.SocialPlatforms;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -23,11 +26,13 @@ public class GameController : MonoBehaviour
     public Text multi;
     public Button retryButton;
     public Button quitButton;
+    public Button leaderboardButton;
 
     //Booleans.
     bool highscoreFlash = false;
     bool newHighScore = false;
 	string log;
+    bool postScore = false;
 
     //Reference to player.
 	public PlayerController player;
@@ -40,7 +45,8 @@ public class GameController : MonoBehaviour
 		gameScore = 0;
 		retryButton.gameObject.SetActive (false);
 		quitButton.gameObject.SetActive (false);
-		playerController = GameObject.FindGameObjectWithTag ("Player");
+        leaderboardButton.gameObject.SetActive(false);
+        playerController = GameObject.FindGameObjectWithTag ("Player");
 		player = playerController.GetComponent<PlayerController> ();
 	}
 	
@@ -103,7 +109,22 @@ public class GameController : MonoBehaviour
 	{
 		if (player.isDead == true)
 		{
-			retryButton.gameObject.SetActive (true);
+            if (postScore == false)
+            {
+                if (PlayGamesPlatform.Instance.localUser.authenticated)
+                {
+                    // Note: make sure to add 'using GooglePlayGames'
+                    PlayGamesPlatform.Instance.ReportScore(gameScore,
+                        GPGSIds.leaderboard_highscore,
+                        (bool success) =>
+                        {
+                            Debug.Log("Leaderboard update success: " + success);
+                        });
+                }
+                postScore = true;
+            }
+            leaderboardButton.gameObject.SetActive(true);
+            retryButton.gameObject.SetActive (true);
 			quitButton.gameObject.SetActive (true);
 			multi.gameObject.SetActive(false);
 			if (newHighScore == true) 
@@ -193,4 +214,16 @@ public class GameController : MonoBehaviour
 			timer = resetTimer;
 		}
 	}
+
+    public void ShowLeaderboardUI()
+    {
+        if (PlayGamesPlatform.Instance.localUser.authenticated)
+        {
+            PlayGamesPlatform.Instance.ShowLeaderboardUI();
+        }
+        else
+        {
+            Debug.Log("Cannot show leaderboard: not authenticated");
+        }
+    }
 }
