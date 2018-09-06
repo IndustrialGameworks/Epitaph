@@ -15,6 +15,8 @@ public class googlePlayScript : MonoBehaviour
 
     public PlayScript playScript;
 
+    public int leaderboardScore;
+
     // Use this for initialization
     void Start ()
     {
@@ -46,6 +48,19 @@ public class googlePlayScript : MonoBehaviour
         PlayGamesPlatform.DebugLogEnabled = true;
         PlayGamesPlatform.Activate();
         PlayGamesPlatform.Instance.Authenticate(SignInCallback, true);//silent sign in if the player has signed in previously
+
+        leaderboardScore = (int)PlayerPrefs.GetFloat("HighScore", 0);
+
+        if (PlayGamesPlatform.Instance.localUser.authenticated)
+        {
+            // Note: make sure to add 'using GooglePlayGames'
+            PlayGamesPlatform.Instance.ReportScore(leaderboardScore,
+                GPGSIds.leaderboard_highscore,
+                (bool success) =>
+                {
+                    Debug.Log("Leaderboard update success: " + success);
+                });
+        }
     }
 	
 	// Update is called once per frame

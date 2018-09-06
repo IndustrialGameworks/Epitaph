@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     //Integers.
 	public static int gameScore = 0;
     public static int multiplier = 1;
+    public int leaderboardScore;
 
     //Floats.
     public static float timer = 180.0f;
@@ -48,7 +49,19 @@ public class GameController : MonoBehaviour
         leaderboardButton.gameObject.SetActive(false);
         playerController = GameObject.FindGameObjectWithTag ("Player");
 		player = playerController.GetComponent<PlayerController> ();
-	}
+        leaderboardScore = (int)PlayerPrefs.GetFloat("HighScore", 0);
+
+        if (PlayGamesPlatform.Instance.localUser.authenticated)
+        {
+            // Note: make sure to add 'using GooglePlayGames'
+            PlayGamesPlatform.Instance.ReportScore(leaderboardScore,
+                GPGSIds.leaderboard_highscore,
+                (bool success) =>
+                {
+                    Debug.Log("Leaderboard update success: " + success);
+                });
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () 
@@ -84,7 +97,7 @@ public class GameController : MonoBehaviour
 		multi.text = "Multiplier";
 	}
 
-	void restart()
+	void restart()//code for restarting the scene.
 	{
 		if (Input.GetKey (KeyCode.R))
 		{
@@ -114,7 +127,7 @@ public class GameController : MonoBehaviour
                 if (PlayGamesPlatform.Instance.localUser.authenticated)
                 {
                     // Note: make sure to add 'using GooglePlayGames'
-                    PlayGamesPlatform.Instance.ReportScore(gameScore,
+                    PlayGamesPlatform.Instance.ReportScore(leaderboardScore,
                         GPGSIds.leaderboard_highscore,
                         (bool success) =>
                         {
