@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//this script contols the touch controller. it is attached to the touch controller game object and tracks the finger on a touch screen.
+
 public class touchControlScript : MonoBehaviour 
 {
 	//bool to check if dragging or not.

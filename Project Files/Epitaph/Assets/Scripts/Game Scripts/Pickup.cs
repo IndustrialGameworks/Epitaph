@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//this script controls whatt the pickup does once it collides with a player collider.
+
 public class Pickup : MonoBehaviour
 {
-
+    //Floats.
 	public float movementSpeed = 10;
 
 	// Use this for initialization

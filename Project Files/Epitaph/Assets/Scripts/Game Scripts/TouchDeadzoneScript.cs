@@ -20,12 +20,12 @@ public class TouchDeadzoneScript : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        bottomCorner = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+        bottomCorner = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));//calls the bottom leftmost corner.
         setBounds();
-        Vector2 startPosition = new Vector2(minX + 0.35f, transform.position.y);
-        transform.position = startPosition;
-        deadzoneSprite = GetComponent<SpriteRenderer>();
-        deadzoneSprite.enabled = false;
+        Vector2 startPosition = new Vector2(minX + 0.35f, transform.position.y);//on start this objects position is equal to this vector 2.
+        transform.position = startPosition;//move to start position.
+        deadzoneSprite = GetComponent<SpriteRenderer>();//gets the sprite renderer of this gameobject.
+        deadzoneSprite.enabled = false;//disbales it on start.
         playerTouchController = GameObject.FindGameObjectWithTag("PlayerTouchController");//gets the gameobject with tag playertouchcontroller.
     }
 	
@@ -36,16 +36,16 @@ public class TouchDeadzoneScript : MonoBehaviour
         {
             if (playerTouchController.transform.position.x <= minX + 1)//if the players x position is less then the minX + 1 enable this gameobjects sprite renderer.
             {
-                deadzoneSprite.enabled = true;
+                deadzoneSprite.enabled = true;//enable this gameobjects sprite.
             }
             else//disable this gameobjects sprite renderer.
             {
-                deadzoneSprite.enabled = false;
+                deadzoneSprite.enabled = false;//disable this gameobjects sprite.
             }
         }
         else
         {
-            deadzoneSprite.enabled = false;
+            deadzoneSprite.enabled = false;//disable this gameobjects sprite.
         }
     }
 

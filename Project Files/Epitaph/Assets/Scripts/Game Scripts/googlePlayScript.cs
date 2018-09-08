@@ -6,28 +6,34 @@ using UnityEngine.SocialPlatforms;
 using UnityEngine;
 using UnityEngine.UI;
 
+//This script controls and activates google play services for this game.
 public class googlePlayScript : MonoBehaviour
 {
+    //Ints.
+    public int leaderboardScore;
+
+    //UI.
     private Text signInButtonText;
     private Text authStatus;
 
+    //Gameobjects.
     private GameObject leaderboardButton;
 
+    //Scripts.
     public PlayScript playScript;
-
-    public int leaderboardScore;
 
     // Use this for initialization
     void Start ()
     {
-        signInButtonText = GameObject.Find("signInButton").GetComponentInChildren<Text>();
-        authStatus = GameObject.Find("authStatus").GetComponent<Text>();
+        signInButtonText = GameObject.Find("signInButton").GetComponentInChildren<Text>();//Calls the text component ofthe sign in button which is a child of the button.
+        authStatus = GameObject.Find("authStatus").GetComponent<Text>();//Calls the text component of the authstatus text.
 
-        leaderboardButton = GameObject.Find("leaderboardButton");
+        leaderboardButton = GameObject.Find("leaderboardButton");//Gets the leaderboard button.
 
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-        // enables saving game progress.
-        .EnableSavedGames()
+
+        .EnableSavedGames()// enables saving game progress.
+
         // registers a callback to handle game invitations received while the game is not running.
         //.WithInvitationDelegate(< callback method >)
         // registers a callback for turn based match notifications received while the
@@ -42,21 +48,19 @@ public class googlePlayScript : MonoBehaviour
         // requests an ID token be generated.  This OAuth token can be used to
         //  identify the player to other services such as Firebase.
         //.RequestIdToken()
+
         .Build();
 
         PlayGamesPlatform.InitializeInstance(config);
-        PlayGamesPlatform.DebugLogEnabled = true;
-        PlayGamesPlatform.Activate();
-        PlayGamesPlatform.Instance.Authenticate(SignInCallback, true);//silent sign in if the player has signed in previously
+        PlayGamesPlatform.DebugLogEnabled = true;//Enables google play debugging.
+        PlayGamesPlatform.Activate();//Activate google play services.
+        PlayGamesPlatform.Instance.Authenticate(SignInCallback, true);//silent sign in if the player has signed in previously.
 
-        leaderboardScore = (int)PlayerPrefs.GetFloat("HighScore", 0);
+        leaderboardScore = (int)PlayerPrefs.GetFloat("HighScore", 0);//Store the local player prefs highscore in a private int.
 
-        if (PlayGamesPlatform.Instance.localUser.authenticated)
+        if (PlayGamesPlatform.Instance.localUser.authenticated)//if the player is signed in to google play services.
         {
-            // Note: make sure to add 'using GooglePlayGames'
-            PlayGamesPlatform.Instance.ReportScore(leaderboardScore,
-                GPGSIds.leaderboard_highscore,
-                (bool success) =>
+            PlayGamesPlatform.Instance.ReportScore(leaderboardScore,GPGSIds.leaderboard_highscore,(bool success) =>//Push the local player prefs highscore to the leaderboard (if its higher than the score on google play leaderboard it will automatically replace that score).
                 {
                     Debug.Log("Leaderboard update success: " + success);
                 });
@@ -66,20 +70,20 @@ public class googlePlayScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (PlayGamesPlatform.Instance.localUser.authenticated && playScript.enableLeadeboard == true)
+        if (PlayGamesPlatform.Instance.localUser.authenticated && playScript.enableLeadeboard == true)//If the user is signed in and the enable leaderboard bool from the playscript is true.
         {
-            leaderboardButton.gameObject.SetActive(true);
+            leaderboardButton.gameObject.SetActive(true);//set the leaderboard button to be visible.
         }
         else
         {
-            leaderboardButton.gameObject.SetActive(false);
+            leaderboardButton.gameObject.SetActive(false);//set the leaderboard button to be false.
         }
     }
 
-    public void SignIn()
+    public void SignIn()//this is called when you click the sign in button.
     {
 
-        if (!PlayGamesPlatform.Instance.localUser.authenticated)
+        if (!PlayGamesPlatform.Instance.localUser.authenticated)//if the user is nopt signed in.
         {
             // Sign in with Play Game Services, showing the consent dialog
             // by setting the second parameter to isSilent=false.
@@ -87,47 +91,37 @@ public class googlePlayScript : MonoBehaviour
                 SignInCallback(success); //pushes returned bool to be handled by SignInCallback
             }); ;
         }
-        else
+        else//f the user is signed in.
         {
-            // Sign out of play games
-            PlayGamesPlatform.Instance.SignOut();
-
-
-            // Reset UI
-            signInButtonText.text = "Sign In";
-            authStatus.text = "";
+            PlayGamesPlatform.Instance.SignOut();// Sign out of play games.
+            signInButtonText.text = "Sign In";//set the text of the sign in button.
+            authStatus.text = "";//set the text of the auth status.
         }
     }
 
     public void SignInCallback(bool success)
     {
-        if (success)
+        if (success)//if true.
         {
             Debug.Log("Signed in!");
-
-            // Change sign-in button text
-            signInButtonText.text = "Sign out";
-
-            // Show the user's name
-            authStatus.text = "Signed in as: " + Social.localUser.userName;
+            signInButtonText.text = "Sign out";// Change sign-in button text
+            authStatus.text = "Signed in as: " + Social.localUser.userName;// Show the user's name
         }
-        else
+        else//if false.
         {
             Debug.Log("Sign-in failed...");
-
-            // Show failure message
-            signInButtonText.text = "Sign in";
+            signInButtonText.text = "Sign in";// Show failure message
             authStatus.text = "Sign-in failed";
         }
     }
 
-    public void ShowLeaderboard()
+    public void ShowLeaderboard()//called when you click the laderboard button.
     {
-        if (PlayGamesPlatform.Instance.localUser.authenticated)
+        if (PlayGamesPlatform.Instance.localUser.authenticated)//if the user is signed in.
         {
-            PlayGamesPlatform.Instance.ShowLeaderboardUI();
+            PlayGamesPlatform.Instance.ShowLeaderboardUI();//open the google play games leaderboard.
         }
-        else
+        else//if the user isnt signed in.
         {
             Debug.Log("Cannot show leaderboard: not authenticated");
         }

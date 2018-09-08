@@ -52,13 +52,8 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
 
-		delayBetweenProjectiles = waveParent.attackspeed;
+		delayBetweenProjectiles = 1.0f;
 		StandardEnemyWaveController waveScript = enemyWaveController.GetComponent<StandardEnemyWaveController> ();//brings in script from standardwavecontroller.
-		navLocation1 = waveScript.navigationPoints [0].transform.position;//these call the positions of the 5 nav points.
-		navLocation2 = waveScript.navigationPoints [1].transform.position;
-		navLocation3 = waveScript.navigationPoints [2].transform.position;
-		navLocation4 = waveScript.navigationPoints [3].transform.position;
-		navLocation5 = waveScript.navigationPoints [4].transform.position;
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
         tierOneSprite = GetComponent<SpriteRenderer>();
         theText = pointsText.GetComponent<TextMesh>();//calls textmesh.
@@ -67,87 +62,13 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		Movement ();
 		Status ();
 	}
-		
-	void Movement () 
-	{
-		float dist = Vector2.Distance(gameObject.transform.position, navLocation1);
-		if (navPointsComplete == 0) 
-		{//check if the enemies position is less than/ greater than the position of the nav point and a specific axis.
-			//Debug.Log("navpointscomplete 0");
-			if (dist > distance)
-			{
-				//Debug.Log ("dis1>distance");
-				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
-				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation1, waveSpeed * Time.deltaTime));
-			}
-			else 
-			{
-				navPointsComplete = 1;//set navpoints complete to +1 so the enemy can move on to the next nav point.
-			}
-		} 
-		else if (navPointsComplete == 1) 
-		{
-			dist = Vector2.Distance(gameObject.transform.position, navLocation2);
-			if (dist > distance)
-			{
-				//Debug.Log ("dis1>distance");
-				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
-				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation2, waveSpeed * Time.deltaTime));
-			}
-			else 
-			{
-				navPointsComplete = 2;//set navpoints complete to +1 so the enemy can move on to the next nav point.
-			}
-		} 
-		else if (navPointsComplete == 2) 
-		{
-			dist = Vector2.Distance(gameObject.transform.position, navLocation3);
-			if (dist > distance)
-			{
-				//Debug.Log ("dis1>distance");
-				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
-				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation3, waveSpeed * Time.deltaTime));
-			}
-			else 
-			{
-				navPointsComplete = 3;//set navpoints complete to +1 so the enemy can move on to the next nav point.
-			}
-		} 
-		else if (navPointsComplete == 3) 
-		{
-			dist = Vector2.Distance(gameObject.transform.position, navLocation4);
-			if (dist > distance)
-			{
-				//Debug.Log ("dis1>distance");
-				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
-				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation4, waveSpeed * Time.deltaTime));
-			}
-			else 
-			{
-				navPointsComplete = 4;//set navpoints complete to +1 so the enemy can move on to the next nav point.
-			}
-		} 
-		else if (navPointsComplete == 4) 
-		{
-			dist = Vector2.Distance(gameObject.transform.position, navLocation5);
-			if (dist > distance)
-			{
-				//Debug.Log ("dis1>distance");
-				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
-				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation5, waveSpeed * Time.deltaTime));
-			}
-			else 
-			{
-				navPointsComplete = 5;//set navpoints complete to +1 so the enemy can move on to the next nav point.
-			}
-		} 
-	}
-
-	void Status () {
-		if (health <= 0) {
+	
+	void Status ()
+    {
+		if (health <= 0)
+        {
 			GameController.gameScore += (10 * GameController.multiplier);
 			theText.text = "+" + (10 * GameController.multiplier);
 			pointsText.transform.SetParent (enemyWaveController.transform);
@@ -162,8 +83,10 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 		}
 	}
 
-	IEnumerator Attack () {
-		while (true) {
+	IEnumerator Attack ()
+    {
+		while (true)
+        {
 			Instantiate (projectile1, frontEmitter.transform.position, Quaternion.identity);
 			yield return new WaitForSeconds (delayBetweenProjectiles);
 		}
@@ -171,7 +94,8 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if (other.tag == "PlayerProjectile") {
+		if (other.tag == "PlayerProjectile")
+        {
             StartCoroutine("changeColor");
             health -= 50;
 			Destroy (other.gameObject);

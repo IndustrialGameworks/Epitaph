@@ -52,126 +52,31 @@ public class ThirdTierEnemyController : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
 		//moveDown = (Random.value > 0.5f);
 		//StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
 		waveParent = transform.root.GetComponent<WaveEnd> ();
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
 
-		delayBetweenProjectiles = waveParent.attackspeed;
+		delayBetweenProjectiles = 1.0f;
 		ThirdTierWave waveScript = enemyWaveController.GetComponent<ThirdTierWave> ();//brings in script from standardwavecontroller.
-		navLocation1 = waveScript.navigationPoints [0].transform.position;//these call the positions of the 5 nav points.
-		navLocation2 = waveScript.navigationPoints [1].transform.position;
-		navLocation3 = waveScript.navigationPoints [2].transform.position;
-		navLocation4 = waveScript.navigationPoints [3].transform.position;
-		navLocation5 = waveScript.navigationPoints [4].transform.position;
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
         tierThreeSprite = GetComponent<SpriteRenderer>();
 		theText = pointsText.GetComponent<TextMesh>();//calls textmesh.
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		Movement ();
+	void Update ()
+    {
 		Status ();
 	}
 
-
-	void Movement () {
-		//transform.Translate (Vector2.left * movementSpeed * Time.deltaTime);
-
-//		if (edgeBounce == true) { //legacy code no longer in use
-//
-//			if (transform.position.y <= -4.2f) {
-//				moveDown = false;
-//			}
-//			if (transform.position.y >= 4.2f) {
-//				moveDown = true;
-//			}
-//
-//			if (moveDown == true) {
-//				transform.Translate (Vector2.down * movementSpeed * Time.deltaTime);
-//			}
-//			if (moveDown == false) {
-//				transform.Translate (Vector2.up * movementSpeed * Time.deltaTime);
-//			}
-//		}
-		float dist = Vector2.Distance(gameObject.transform.position, navLocation1);
-		if (navPointsComplete == 0) 
-		{//check if the enemies position is less than/ greater than the position of the nav point and a specific axis.
-			//Debug.Log("navpointscomplete 0");
-			if (dist > distance)
-			{
-				//Debug.Log ("dis1>distance");
-				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
-				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation1, waveSpeed * Time.deltaTime));
-			}
-			else 
-			{
-				navPointsComplete = 1;//set navpoints complete to +1 so the enemy can move on to the next nav point.
-			}
-		} 
-		else if (navPointsComplete == 1) 
-		{
-			dist = Vector2.Distance(gameObject.transform.position, navLocation2);
-			if (dist > distance)
-			{
-				//Debug.Log ("dis1>distance");
-				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
-				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation2, waveSpeed * Time.deltaTime));
-			}
-			else 
-			{
-				navPointsComplete = 2;//set navpoints complete to +1 so the enemy can move on to the next nav point.
-			}
-		} 
-		else if (navPointsComplete == 2) 
-		{
-			dist = Vector2.Distance(gameObject.transform.position, navLocation3);
-			if (dist > distance)
-			{
-				//Debug.Log ("dis1>distance");
-				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
-				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation3, waveSpeed * Time.deltaTime));
-			}
-			else 
-			{
-				navPointsComplete = 3;//set navpoints complete to +1 so the enemy can move on to the next nav point.
-			}
-		} 
-		else if (navPointsComplete == 3) 
-		{
-			dist = Vector2.Distance(gameObject.transform.position, navLocation4);
-			if (dist > distance)
-			{
-				//Debug.Log ("dis1>distance");
-				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
-				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation4, waveSpeed * Time.deltaTime));
-			}
-			else 
-			{
-				navPointsComplete = 4;//set navpoints complete to +1 so the enemy can move on to the next nav point.
-			}
-		} 
-		else if (navPointsComplete == 4) 
-		{
-			dist = Vector2.Distance(gameObject.transform.position, navLocation5);
-			if (dist > distance)
-			{
-				//Debug.Log ("dis1>distance");
-				//transform.Translate (-waveSpeed * Time.deltaTime, 0, 0);//moves enemy towards that navpoint.
-				transform.position = (Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), navLocation5, waveSpeed * Time.deltaTime));
-			}
-			else 
-			{
-				navPointsComplete = 5;//set navpoints complete to +1 so the enemy can move on to the next nav point.
-			}
-		} 
-	}
-
-	void Status () {
-		if (health <= 0) {
+	void Status ()
+    {
+		if (health <= 0)
+        {
 			GameController.gameScore += (30 * GameController.multiplier);
 			theText.text = "+" + (30 * GameController.multiplier);
 			pointsText.transform.SetParent (enemyWaveController.transform);
@@ -186,15 +91,19 @@ public class ThirdTierEnemyController : MonoBehaviour {
 		}
 	}
 
-	IEnumerator Attack () {
-		while (true) {
-			if (cycleFire == false) {
+	IEnumerator Attack ()
+    {
+		while (true)
+        {
+			if (cycleFire == false)
+            {
 				Instantiate (projectile1, frontEmitter.transform.position, Quaternion.identity);
 				Instantiate (projectile1, topEmitter.transform.position, Quaternion.identity);
 				Instantiate (projectile1, bottomEmitter.transform.position, Quaternion.identity);
 				yield return new WaitForSeconds (delayBetweenProjectiles);
 			}
-			if (cycleFire == true) {
+			if (cycleFire == true)
+            {
 				Instantiate (projectile1, frontEmitter.transform.position, Quaternion.identity);
 				yield return new WaitForSeconds (timeBetweenCycling);
 				Instantiate (projectile1, topEmitter.transform.position, Quaternion.identity);
@@ -207,7 +116,8 @@ public class ThirdTierEnemyController : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if (other.tag == "PlayerProjectile") {
+		if (other.tag == "PlayerProjectile")
+        {
 			health -= 50;
 			Destroy (other.gameObject);
             StartCoroutine("changeColor");
