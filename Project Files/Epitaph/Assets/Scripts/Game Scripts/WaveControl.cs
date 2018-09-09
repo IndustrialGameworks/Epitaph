@@ -14,9 +14,14 @@ public class WaveControl : MonoBehaviour
     public int delayUntilMove;
     public float delayBetweenAttacks;
 
+    GameObject reference;
+    public GameObject spawner;
+    public GameObject spawnerMirrored;
+
     // Use this for initialization
     void Start ()
     {
+        reference = gameObject;
         Initiate();
         InitiateMirrored();
     }
@@ -32,6 +37,7 @@ public class WaveControl : MonoBehaviour
         int denominator = 0;
         foreach (GameObject enemy in enemies)
         {
+            Instantiate(enemy, spawner.transform.position, Quaternion.identity, reference.transform);
             if (enemy.GetComponentInChildren<PathFollow>() != null)
             {
                 Debug.Log("pathfollow speed should have changed.");
@@ -64,6 +70,7 @@ public class WaveControl : MonoBehaviour
         int denominator = 0;
         foreach (GameObject enemy in mirroredEnemies)
         {
+            Instantiate(enemy, spawnerMirrored.transform.position, Quaternion.identity, reference.transform);
             if (enemy.GetComponentInChildren<PathFollow>() != null)
             {
                 Debug.Log("pathfollow speed should have changed.");
