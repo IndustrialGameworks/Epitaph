@@ -6,11 +6,6 @@ public class SecondTierEnemyController : MonoBehaviour {
 
 	public int health = 200;
 
-	//Movement Variables
-	public float movementSpeed = 3;
-	//public bool edgeBounce = false; //no longer in use
-	bool moveDown; // currently assigns random boolean to whether enemy starts out moving up or down.
-
 	//Attack Variables
 	public float delayBetweenProjectiles = 1.5f;
 	public GameObject frontEmitter;
@@ -19,16 +14,6 @@ public class SecondTierEnemyController : MonoBehaviour {
 	public GameObject projectile1;
 	public GameObject projectile2;
 	public GameObject enemyWaveController;
-
-	//movement variables
-	public Vector2 navLocation1;
-	public Vector2 navLocation2;
-	public Vector2 navLocation3;
-	public Vector2 navLocation4;
-	public Vector2 navLocation5;
-	public float distance = 1;
-	public int navPointsComplete = 0;
-	public float waveSpeed = 10;
 
 	//editable variables
 	public WaveEnd waveParent;
@@ -51,8 +36,6 @@ public class SecondTierEnemyController : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-		//moveDown = (Random.value > 0.5f);
-		//StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
 		waveParent = transform.root.GetComponent<WaveEnd> ();
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);

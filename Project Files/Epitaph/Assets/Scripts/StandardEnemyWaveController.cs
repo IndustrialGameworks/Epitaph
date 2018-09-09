@@ -6,29 +6,18 @@ public class StandardEnemyWaveController : MonoBehaviour {
 
 	//Arrays
 	public GameObject[] enemiesInWave;
-	public GameObject[] navigationPoints;
-	public int navPointsComplete1 = 0;
-	public int navPointsComplete2 = 0;
-	public int navPointsComplete3 = 0;
-
-	public Vector2 navLocation1;
-	public Vector2 navLocation2;
-	public Vector2 navLocation3;
-
 	public ControlledStandardEnemyController enemyController;
-
-
-	//Movement
-	public float waveSpeed;
 	public GameObject pointsText;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		StartCoroutine ("destroyThis");
 	}
 
@@ -40,14 +29,6 @@ public class StandardEnemyWaveController : MonoBehaviour {
 			Destroy (gameObject);
 		}
 	}
-
-//	IEnumerator destroytext()
-//	{
-//		if (enemyController.isDestroyed == true) {
-//			yield return new WaitForSeconds (0.5f);
-//			Destroy (pointsText);
-//		}
-//	}
 
 	void OnBecameInvisible ()
 	{

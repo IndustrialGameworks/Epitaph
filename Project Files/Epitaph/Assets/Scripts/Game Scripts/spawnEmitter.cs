@@ -126,7 +126,7 @@ public class spawnEmitter : MonoBehaviour
 		yield return new WaitForSeconds (secondsBeforeBegin);
 		StartCoroutine ("SpawnPickup");
         //StartCoroutine ("SpawnWaves");
-        StartCoroutine("SpawnEnemy");
+        //StartCoroutine("SpawnEnemy");
 		StartCoroutine ("SpawnSpecialEnemy");
     }
 

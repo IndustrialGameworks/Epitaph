@@ -17,16 +17,6 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	public GameObject projectile2;
 	public GameObject enemyWaveController;
 
-	//movement variables
-	public Vector2 navLocation1;
-	public Vector2 navLocation2;
-	public Vector2 navLocation3;
-	public Vector2 navLocation4;
-	public Vector2 navLocation5;
-	public float distance = 1;
-	public int navPointsComplete = 0;
-	public float waveSpeed = 3;
-
 	//text variables
 	public GameObject pointsText;
 	TextMesh theText;
@@ -37,18 +27,14 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	int randomChance;
 	int pickupNumber;
 
-	//editable variables
-	public WaveEnd waveParent;
-    //public GameObject root;
-
     //color variables
     Color hit = new Color(145f / 255f, 50f / 255f, 50f / 255f, 1);
     Color standard = Color.white;
     SpriteRenderer tierOneSprite;
 
     // Use this for initialization
-    void Start () {
-		waveParent = transform.root.GetComponent<WaveEnd> ();
+    void Start ()
+    {
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
 

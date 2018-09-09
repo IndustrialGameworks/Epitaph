@@ -6,11 +6,6 @@ public class ThirdTierEnemyController : MonoBehaviour {
 
 	public int health = 300;
 
-	//Movement Variables
-	public float movementSpeed = 2;
-	//public bool edgeBounce = false; //no longer in use
-	bool moveDown; // currently assigns random boolean to whether enemy starts out moving up or down.
-
 	//Attack Variables
 	public bool cycleFire = false;
 	public float delayBetweenProjectiles = 2f;
@@ -21,19 +16,6 @@ public class ThirdTierEnemyController : MonoBehaviour {
 	public GameObject projectile1;
 	public GameObject projectile2;
 	public GameObject enemyWaveController;
-
-	//movement variables
-	public Vector2 navLocation1;
-	public Vector2 navLocation2;
-	public Vector2 navLocation3;
-	public Vector2 navLocation4;
-	public Vector2 navLocation5;
-	public float distance = 1;
-	public int navPointsComplete = 0;
-	public float waveSpeed = 10;
-
-	//editable variables
-	public WaveEnd waveParent;
 
 	//text variables
 	public GameObject pointsText;
@@ -54,9 +36,6 @@ public class ThirdTierEnemyController : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-		//moveDown = (Random.value > 0.5f);
-		//StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
-		waveParent = transform.root.GetComponent<WaveEnd> ();
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
 

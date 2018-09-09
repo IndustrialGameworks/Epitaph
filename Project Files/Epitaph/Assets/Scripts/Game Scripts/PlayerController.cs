@@ -31,9 +31,21 @@ public class PlayerController : MonoBehaviour
 	Vector2 topCorner;
 	private float minX, maxX, minY, maxY;
 
+    //renderer and color variables.
+    public SpriteRenderer topEmitterSprite;
+    public SpriteRenderer bottomEmitterSprite;
+    public SpriteRenderer centerEmitterSprite;
+    public GameObject deathParticle;
+
 	void Start ()
     {
-		bottomCorner = Camera.main.ViewportToWorldPoint(new Vector2(0,0));//sets the top and bottom corner vector to equal loaction of top and bottom corners. 
+        if (topEmitterSprite != null && bottomEmitterSprite != null)
+        {
+            topEmitterSprite.gameObject.SetActive(false);
+            bottomEmitterSprite.gameObject.SetActive(false);
+        }
+        centerEmitterSprite = gameObject.GetComponent<SpriteRenderer>();
+        bottomCorner = Camera.main.ViewportToWorldPoint(new Vector2(0,0));//sets the top and bottom corner vector to equal loaction of top and bottom corners. 
         topCorner = Camera.main.ViewportToWorldPoint(new Vector2(1,1));
 		StartCoroutine ("Initialization"); //starts a coroutine running for firing projectiles
 	}
@@ -112,7 +124,12 @@ public class PlayerController : MonoBehaviour
 		while (singleEmitter == true)
         {
 			StopCoroutine ("PickupTimer");
-			Instantiate (projectile1, frontEmitter.transform.position, Quaternion.identity);
+            if (topEmitterSprite != null && bottomEmitterSprite != null)
+            {
+                topEmitterSprite.gameObject.SetActive(false);
+                bottomEmitterSprite.gameObject.SetActive(false);
+            }
+            Instantiate (projectile1, frontEmitter.transform.position, Quaternion.identity);
 			yield return new WaitForSeconds (delayBetweenProjectiles);
 		}
 	}
@@ -120,9 +137,14 @@ public class PlayerController : MonoBehaviour
 	IEnumerator DualAttack ()
     {
 		while (doubleEmitter == true)
-        { 
+        {
             //starts firing from top and bottom emitters.
-			Instantiate (projectile1, topEmitter.transform.position, Quaternion.identity);
+            if (topEmitterSprite != null && bottomEmitterSprite != null)
+            {
+                topEmitterSprite.gameObject.SetActive(true);
+                bottomEmitterSprite.gameObject.SetActive(true);
+            }
+            Instantiate (projectile1, topEmitter.transform.position, Quaternion.identity);
 			Instantiate (projectile1, bottomEmitter.transform.position, Quaternion.identity);
 			yield return new WaitForSeconds (delayBetweenProjectiles);
 		}
@@ -133,7 +155,12 @@ public class PlayerController : MonoBehaviour
         //start firing from all emitters.
 		while (tripleEmitter == true)
         {
-			Instantiate (projectile1, frontEmitter.transform.position, Quaternion.identity);
+            if (topEmitterSprite != null && bottomEmitterSprite != null)
+            {
+                topEmitterSprite.gameObject.SetActive(true);
+                bottomEmitterSprite.gameObject.SetActive(true);
+            }
+            Instantiate (projectile1, frontEmitter.transform.position, Quaternion.identity);
 			Instantiate (projectile1, topEmitter.transform.position, Quaternion.identity);
 			Instantiate (projectile1, bottomEmitter.transform.position, Quaternion.identity);
 			yield return new WaitForSeconds (delayBetweenProjectiles);
@@ -152,8 +179,12 @@ public class PlayerController : MonoBehaviour
 		if (other.tag == "EnemyProjectile" || other.tag == "Enemy")//if collided with an enemy or enemy projectile.
         {
 			isDead = true;//destroy this game object and its parent and set isDead bool to true.
-			Destroy (gameObject);
-			Destroy(transform.parent.gameObject);
+            if (deathParticle != null)
+            {
+                Instantiate(deathParticle, transform.position, Quaternion.identity);
+            }
+            Destroy (gameObject);
+            Destroy(transform.parent.gameObject);
 		}
 		if (other.tag == "PickupDualBlast")//if the pickup is a dual blast.
         {
