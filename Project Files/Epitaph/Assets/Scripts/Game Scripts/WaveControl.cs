@@ -12,6 +12,7 @@ public class WaveControl : MonoBehaviour
     public int waveSize;
     public int speed;
     public int delayUntilMove;
+    public int deathTally = 0;
     public float delayBetweenAttacks;
 
     GameObject reference;
@@ -37,31 +38,31 @@ public class WaveControl : MonoBehaviour
         int denominator = 0;
         foreach (GameObject enemy in enemies)
         {
-            Instantiate(enemy, spawner.transform.position, Quaternion.identity, reference.transform);
-            if (enemy.GetComponentInChildren<PathFollow>() != null)
+            GameObject instanceOfEnemy = Instantiate(enemy, spawner.transform.position, Quaternion.identity, reference.transform);
+            if (instanceOfEnemy.GetComponentInChildren<PathFollow>() != null)
             {
                 Debug.Log("pathfollow speed should have changed.");
-                var pathFollow = enemy.GetComponentInChildren <PathFollow> ();
+                var pathFollow = instanceOfEnemy.GetComponentInChildren <PathFollow> ();
                 pathFollow.speed = speed;
                 pathFollow.waitTime = delayUntilMove * denominator;
             }
-            if (enemy.GetComponentInChildren<ControlledStandardEnemyController>() != null)
+            if (instanceOfEnemy.GetComponentInChildren<ControlledStandardEnemyController>() != null)
             {
-                var firstTierController = enemy.GetComponentInChildren<ControlledStandardEnemyController>();
+                var firstTierController = instanceOfEnemy.GetComponentInChildren<ControlledStandardEnemyController>();
                 firstTierController.delayBetweenProjectiles = delayBetweenAttacks;
             }
-            if (enemy.GetComponentInChildren<SecondTierEnemyController>() != null)
+            if (instanceOfEnemy.GetComponentInChildren<SecondTierEnemyController>() != null)
             {
-                var secondTierController = enemy.GetComponentInChildren<SecondTierEnemyController>();
+                var secondTierController = instanceOfEnemy.GetComponentInChildren<SecondTierEnemyController>();
                 secondTierController.delayBetweenProjectiles = delayBetweenAttacks;
             }
-            if (enemy.GetComponentInChildren<ThirdTierEnemyController>() != null)
+            if (instanceOfEnemy.GetComponentInChildren<ThirdTierEnemyController>() != null)
             {
-                var thirdTierController = enemy.GetComponentInChildren<ThirdTierEnemyController>();
+                var thirdTierController = instanceOfEnemy.GetComponentInChildren<ThirdTierEnemyController>();
                 thirdTierController.delayBetweenProjectiles = delayBetweenAttacks;
             }
             denominator++;
-            enemiesLength = denominator - 1;
+            enemiesLength = denominator;
         }
     }
 
@@ -70,55 +71,46 @@ public class WaveControl : MonoBehaviour
         int denominator = 0;
         foreach (GameObject enemy in mirroredEnemies)
         {
-            Instantiate(enemy, spawnerMirrored.transform.position, Quaternion.identity, reference.transform);
-            if (enemy.GetComponentInChildren<PathFollow>() != null)
+            GameObject instanceOfEnemy = Instantiate(enemy, spawnerMirrored.transform.position, Quaternion.identity, reference.transform);
+            if (instanceOfEnemy.GetComponentInChildren<PathFollow>() != null)
             {
                 Debug.Log("pathfollow speed should have changed.");
-                var pathFollow = enemy.GetComponentInChildren<PathFollow>();
+                var pathFollow = instanceOfEnemy.GetComponentInChildren<PathFollow>();
                 pathFollow.speed = speed;
                 pathFollow.waitTime = delayUntilMove * denominator;
                 pathFollow.moveToMirrored = true;
             }
-            if (enemy.GetComponentInChildren<ControlledStandardEnemyController>() != null)
+            if (instanceOfEnemy.GetComponentInChildren<ControlledStandardEnemyController>() != null)
             {
-                var firstTierController = enemy.GetComponentInChildren<ControlledStandardEnemyController>();
+                var firstTierController = instanceOfEnemy.GetComponentInChildren<ControlledStandardEnemyController>();
                 firstTierController.delayBetweenProjectiles = delayBetweenAttacks;
             }
-            if (enemy.GetComponentInChildren<SecondTierEnemyController>() != null)
+            if (instanceOfEnemy.GetComponentInChildren<SecondTierEnemyController>() != null)
             {
-                var secondTierController = enemy.GetComponentInChildren<SecondTierEnemyController>();
+                var secondTierController = instanceOfEnemy.GetComponentInChildren<SecondTierEnemyController>();
                 secondTierController.delayBetweenProjectiles = delayBetweenAttacks;
             }
-            if (enemy.GetComponentInChildren<ThirdTierEnemyController>() != null)
+            if (instanceOfEnemy.GetComponentInChildren<ThirdTierEnemyController>() != null)
             {
-                var thirdTierController = enemy.GetComponentInChildren<ThirdTierEnemyController>();
+                var thirdTierController = instanceOfEnemy.GetComponentInChildren<ThirdTierEnemyController>();
                 thirdTierController.delayBetweenProjectiles = delayBetweenAttacks;
             }
             denominator++;
-            mirroredEnemiesLength = denominator - 1;
+            mirroredEnemiesLength = denominator;
         }
     }
 
     void CheckForDestroy()
     {
-        int enemiesNull = 0;
-        foreach (GameObject enemy in mirroredEnemies)
+        if (deathTally == enemiesLength + mirroredEnemiesLength)
         {
-            if (enemy == null)
-            {
-                enemiesNull++;
-            }
+            StartCoroutine("destroyThis");
         }
-        foreach (GameObject enemy in enemies)
-        {
-            if (enemy == null)
-            {
-                enemiesNull++;
-            }
-        }
-        if (enemiesNull == enemiesLength + mirroredEnemiesLength)
-        {
-            Destroy(gameObject);
-        }
+    }
+
+    IEnumerator destroyThis()
+    {
+        yield return new WaitForSeconds(0.75f);
+        Destroy(gameObject);
     }
 }

@@ -126,7 +126,7 @@ public class spawnEmitter : MonoBehaviour
 		yield return new WaitForSeconds (secondsBeforeBegin);
 		StartCoroutine ("SpawnPickup");
         //StartCoroutine ("SpawnWaves");
-        //StartCoroutine("SpawnEnemy");
+        StartCoroutine("SpawnEnemy");
 		StartCoroutine ("SpawnSpecialEnemy");
     }
 
@@ -135,7 +135,6 @@ public class spawnEmitter : MonoBehaviour
         while (true)
         {
             Instantiate(waves[0], emitters[4].transform.position, Quaternion.identity);
-            Instantiate(waves[1], emitters[4].transform.position, Quaternion.identity);
             yield return new WaitForSeconds(secondsBetweenEnemies);
         }
     }

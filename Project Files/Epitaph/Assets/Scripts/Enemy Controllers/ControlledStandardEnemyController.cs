@@ -31,14 +31,13 @@ public class ControlledStandardEnemyController : MonoBehaviour {
     Color hit = new Color(145f / 255f, 50f / 255f, 50f / 255f, 1);
     Color standard = Color.white;
     SpriteRenderer tierOneSprite;
+    public GameObject deathParticle;
 
     // Use this for initialization
     void Start ()
     {
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
-
-		delayBetweenProjectiles = 1.0f;
 		StandardEnemyWaveController waveScript = enemyWaveController.GetComponent<StandardEnemyWaveController> ();//brings in script from standardwavecontroller.
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
         tierOneSprite = GetComponent<SpriteRenderer>();
@@ -60,12 +59,18 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 			pointsText.transform.SetParent (enemyWaveController.transform);
 			isDestroyed = true;
 			GameController.multiplier += 1;
-			GameController.timer = 180.0f; 
+			GameController.timer = 180.0f;
 			if (randomChance == 10) 
 			{
 				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);
 			}
-			Destroy (gameObject);
+            if (deathParticle != null)
+            {
+                Instantiate(deathParticle, transform.position, Quaternion.identity);
+            }
+            var root = gameObject.transform.root;
+            root.GetComponent<WaveControl>().deathTally+=1;
+            Destroy (gameObject);
 		}
 	}
 
@@ -91,7 +96,9 @@ public class ControlledStandardEnemyController : MonoBehaviour {
 	void OnBecameInvisible ()
 	{
 		isDestroyed = true;
-		Destroy (gameObject);
+        var root = gameObject.transform.root;
+        root.GetComponent<WaveControl>().deathTally += 1;
+        Destroy (gameObject);
 	}
 
     IEnumerator changeColor()

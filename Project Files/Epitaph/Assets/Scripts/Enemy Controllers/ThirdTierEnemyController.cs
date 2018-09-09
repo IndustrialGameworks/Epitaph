@@ -31,6 +31,7 @@ public class ThirdTierEnemyController : MonoBehaviour {
     Color hit = new Color(145f / 255f, 50f / 255f, 50f / 255f, 1);
     Color standard = Color.white;
     SpriteRenderer tierThreeSprite;
+    public GameObject deathParticle;
 
 
     // Use this for initialization
@@ -38,8 +39,6 @@ public class ThirdTierEnemyController : MonoBehaviour {
     {
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
-
-		delayBetweenProjectiles = 1.0f;
 		ThirdTierWave waveScript = enemyWaveController.GetComponent<ThirdTierWave> ();//brings in script from standardwavecontroller.
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
         tierThreeSprite = GetComponent<SpriteRenderer>();
@@ -66,7 +65,13 @@ public class ThirdTierEnemyController : MonoBehaviour {
 			{
 				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);
 			}
-			Destroy (gameObject);
+            if (deathParticle != null)
+            {
+                Instantiate(deathParticle, transform.position, Quaternion.identity);
+            }
+            var root = gameObject.transform.root;
+            root.GetComponent<WaveControl>().deathTally += 1;
+            Destroy (gameObject);
 		}
 	}
 
@@ -106,7 +111,9 @@ public class ThirdTierEnemyController : MonoBehaviour {
 	void OnBecameInvisible ()
 	{
 		isDestroyed = true;
-		Destroy (gameObject);
+        var root = gameObject.transform.root;
+        root.GetComponent<WaveControl>().deathTally += 1;
+        Destroy (gameObject);
 	}
 
     IEnumerator changeColor()

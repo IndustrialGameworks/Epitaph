@@ -32,6 +32,7 @@ public class SecondTierEnemyController : MonoBehaviour {
     Color hit = new Color(145f / 255f, 50f / 255f, 50f / 255f, 1);
     Color standard = Color.white;
     SpriteRenderer tierTwoSprite;
+    public GameObject deathParticle;
 
     // Use this for initialization
     void Start ()
@@ -40,7 +41,6 @@ public class SecondTierEnemyController : MonoBehaviour {
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
 
-		delayBetweenProjectiles = 1.0f;
 		SecondTierWave waveScript = enemyWaveController.GetComponent<SecondTierWave> ();//brings in script from standardwavecontroller.
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
         tierTwoSprite = GetComponent<SpriteRenderer>(); 
@@ -67,7 +67,13 @@ public class SecondTierEnemyController : MonoBehaviour {
 			{
 				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);
 			}
-			Destroy (gameObject);
+            if (deathParticle != null)
+            {
+                Instantiate(deathParticle, transform.position, Quaternion.identity);
+            }
+            var root = gameObject.transform.root;
+            root.GetComponent<WaveControl>().deathTally += 1;
+            Destroy (gameObject);
 		}
 	}
 
@@ -94,7 +100,9 @@ public class SecondTierEnemyController : MonoBehaviour {
 	void OnBecameInvisible ()
 	{
 		isDestroyed = true;
-		Destroy (gameObject);
+        var root = gameObject.transform.root;
+        root.GetComponent<WaveControl>().deathTally += 1;
+        Destroy (gameObject);
 	}
 
     IEnumerator changeColor()
