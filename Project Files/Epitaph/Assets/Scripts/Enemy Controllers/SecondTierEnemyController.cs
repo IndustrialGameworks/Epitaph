@@ -71,8 +71,6 @@ public class SecondTierEnemyController : MonoBehaviour {
             {
                 Instantiate(deathParticle, transform.position, Quaternion.identity);
             }
-            var root = gameObject.transform.root;
-            root.GetComponent<WaveControl>().deathTally += 1;
             Destroy (gameObject);
 		}
 	}

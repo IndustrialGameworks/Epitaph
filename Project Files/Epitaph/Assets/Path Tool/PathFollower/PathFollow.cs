@@ -3,29 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathFollow : MonoBehaviour {
+public class PathFollow : MonoBehaviour
+{
 
     public Vector2[] navLocations;
     public Vector2[] mirroredNavLocations;
+
+    public Vector2 currentLocation;
+    public Vector2 targetLocation;
 
     public bool moveToMirrored = false;
 
     public int speed = 10;
     public int waitTime;
 
-    int currentNavDenominator = 0; 
+    int currentNavDenominator = 0;
 
     bool initiated;
     bool canMove;
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         StartCoroutine("waitToMove");
-	}
+    }
 
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update()
     {
+        currentLocation = transform.position; //the current vector of the object
+
         Initiate(); //has to be run here, as the nav points dont exist yet on start!
         if (!moveToMirrored && canMove)
         {
@@ -66,52 +72,62 @@ public class PathFollow : MonoBehaviour {
 
             denominator = 0; //resets for the mirrored nav
 
-            foreach (GameObject g in mirroredNavList) 
+            foreach (GameObject g in mirroredNavList)
             {
                 Vector2 location = g.transform.position;
                 mirroredNavLocations[denominator] = location;
                 denominator++;
             }
 
+            if (!moveToMirrored)
+            {
+                StartCoroutine("ComputeNav");
+            }
+            if (moveToMirrored)
+            {
+                StartCoroutine("ComputeMirroredNav");
+            }
+
             initiated = true; //set to true, so cannot be initiated again
         }
     }
 
-    void MoveToNav() //moves the nav points in specific order
-    { 
-        Vector2 currentLocation = transform.position; //the current vector of the object
-        Vector2 targetLocation = navLocations[currentNavDenominator]; //the current target vector
-
-        if (currentLocation != targetLocation) //if the current location is not equal to the target location move towards target location
+    void ComputeNav()
+    {
+        if (currentNavDenominator < navLocations.Length - 1) //make sure you can't go out of array bounds with next increment
         {
-            transform.position = (Vector2.MoveTowards(new Vector2(currentLocation.x, currentLocation.y), targetLocation, speed * Time.deltaTime));
+            currentNavDenominator++;
         }
 
-        else //if (currentLocation == targetLocation) //when reached the target location, increment the denominator, so that the target location calls the next index in the array
+        targetLocation = navLocations[currentNavDenominator]; //the current target vector
+    }
+
+    void ComputeMirroredNav()
+    {
+        if (currentNavDenominator < mirroredNavLocations.Length - 1) //make sure you can't go out of array bounds with next increment
         {
-            if (currentNavDenominator < navLocations.Length - 1) //make sure you can't go out of array bounds with next increment
-            {
-                currentNavDenominator++;
-            }
+            currentNavDenominator++;
+        }
+
+        targetLocation = mirroredNavLocations[currentNavDenominator];
+    }
+
+    void MoveToNav() //moves the nav points in specific order
+    {
+        transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), targetLocation, speed * Time.deltaTime);
+
+        if (currentLocation == targetLocation) //when reached the target location, increment the denominator, so that the target location calls the next index in the array
+        {
+            ComputeNav();
         }
     }
 
     void MoveToMirroredNav() //moves the nav points in specific order using the mirrored locations
     {
-        Vector2 currentLocation = transform.position; //the current vector of the object
-        Vector2 targetLocation = mirroredNavLocations[currentNavDenominator]; //the current target vector from the mirrored locations array
-
-        if (currentLocation != targetLocation) //if the current location is not equal to the target location move towards target location
+        transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), targetLocation, speed * Time.deltaTime);
+        if (currentLocation == targetLocation) //when reached the target location, increment the denominator, so that the target location calls the next index in the array
         {
-            transform.position = (Vector2.MoveTowards(new Vector2(currentLocation.x, currentLocation.y), targetLocation, speed * Time.deltaTime));
-        }
-
-        else //if (currentLocation == targetLocation) //when reached the target location, increment the denominator, so that the target location calls the next index in the array
-        {
-            if (currentNavDenominator < navLocations.Length - 1) //make sure you can't go out of array bounds with next increment
-            {
-                currentNavDenominator++;
-            }
+            ComputeMirroredNav();
         }
     }
 
