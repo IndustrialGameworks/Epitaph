@@ -39,7 +39,6 @@ public class ThirdTierEnemyController : MonoBehaviour {
     {
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
-		ThirdTierWave waveScript = enemyWaveController.GetComponent<ThirdTierWave> ();//brings in script from standardwavecontroller.
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
         tierThreeSprite = GetComponent<SpriteRenderer>();
 		theText = pointsText.GetComponent<TextMesh>();//calls textmesh.

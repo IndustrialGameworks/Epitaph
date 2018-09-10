@@ -38,7 +38,6 @@ public class ControlledStandardEnemyController : MonoBehaviour {
     {
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
-		StandardEnemyWaveController waveScript = enemyWaveController.GetComponent<StandardEnemyWaveController> ();//brings in script from standardwavecontroller.
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
         tierOneSprite = GetComponent<SpriteRenderer>();
         theText = pointsText.GetComponent<TextMesh>();//calls textmesh.

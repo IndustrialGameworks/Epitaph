@@ -12,7 +12,8 @@ public class BeamDiamondController : MonoBehaviour {
 	public GameObject indicatorBeam;
 	public GameObject fullBeam;
 	public GameObject playerToTrack;
-	float playerAxisY;
+    public GameObject deathParticle;
+    float playerAxisY;
 	float thisAxisY;
 	float axisDifference;
 	bool isFiring;
@@ -75,7 +76,11 @@ public class BeamDiamondController : MonoBehaviour {
 			{
 				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);
 			}
-			Destroy (gameObject);
+            if (deathParticle != null)
+            {
+                Instantiate(deathParticle, transform.position, Quaternion.identity);
+            }
+            Destroy (gameObject);
 		}
 	}
 

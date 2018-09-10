@@ -40,6 +40,7 @@ public class BurstEnemyController : MonoBehaviour {
     Color hit = new Color(145f / 255f, 50f / 255f, 50f / 255f, 1);
     Color standard = Color.white;
     SpriteRenderer burstSprite;
+    public GameObject deathParticle;
 
     // Use this for initialization
     void Start () {
@@ -84,7 +85,11 @@ public class BurstEnemyController : MonoBehaviour {
 			{
 				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);
 			}
-			Destroy (gameObject);
+            if (deathParticle != null)
+            {
+                Instantiate(deathParticle, transform.position, Quaternion.identity);
+            }
+            Destroy (gameObject);
 		}
 	}
 

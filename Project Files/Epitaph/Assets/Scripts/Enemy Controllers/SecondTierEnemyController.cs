@@ -41,7 +41,6 @@ public class SecondTierEnemyController : MonoBehaviour {
 		randomChance = Random.Range (0, 21);
 		pickupNumber = Random.Range (0, 2);
 
-		SecondTierWave waveScript = enemyWaveController.GetComponent<SecondTierWave> ();//brings in script from standardwavecontroller.
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
         tierTwoSprite = GetComponent<SpriteRenderer>(); 
 		theText = pointsText.GetComponent<TextMesh>();//calls textmesh.

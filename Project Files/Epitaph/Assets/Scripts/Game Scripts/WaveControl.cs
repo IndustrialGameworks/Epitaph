@@ -73,7 +73,7 @@ public class WaveControl : MonoBehaviour
             GameObject instanceOfEnemy = Instantiate(enemy, spawnerMirrored.transform.position, Quaternion.identity, reference.transform);
             if (instanceOfEnemy.GetComponentInChildren<PathFollow>() != null)
             {
-                Debug.Log("pathfollow speed should have changed.");
+                //Debug.Log("pathfollow speed should have changed.");
                 var pathFollow = instanceOfEnemy.GetComponentInChildren<PathFollow>();
                 pathFollow.speed = speed;
                 pathFollow.waitTime = delayUntilMove * denominator;
