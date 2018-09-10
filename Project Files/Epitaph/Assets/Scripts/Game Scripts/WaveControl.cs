@@ -11,7 +11,7 @@ public class WaveControl : MonoBehaviour
     private int mirroredEnemiesLength = 0;
     public int waveSize;
     public int speed;
-    public int delayUntilMove;
+    public float delayUntilMove;
     public int deathTally = 0;
     public float delayBetweenAttacks;
 

@@ -15,7 +15,7 @@ public class PathFollow : MonoBehaviour
     public bool moveToMirrored = false;
 
     public int speed = 10;
-    public int waitTime;
+    public float waitTime;
 
     int currentNavDenominator = 0;
 

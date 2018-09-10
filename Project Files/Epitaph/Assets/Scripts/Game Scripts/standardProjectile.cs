@@ -10,6 +10,7 @@ public class standardProjectile : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        StartCoroutine("DestroyAfterTime");
 	}
 
 	// Update is called once per frame
@@ -39,4 +40,10 @@ public class standardProjectile : MonoBehaviour {
 	{
 		Destroy (gameObject);
 	}
+
+    IEnumerator DestroyAfterTime()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
+    }
 }
