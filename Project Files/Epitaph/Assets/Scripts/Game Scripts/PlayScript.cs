@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-[assembly: System.Reflection.AssemblyVersion("0.1.2.10")]
+[assembly: System.Reflection.AssemblyVersion("0.1.2.12")]
 
 //This script is used to manipulate UI in the main menu and in the game scenes.
 
