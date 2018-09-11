@@ -12,6 +12,10 @@ public class spawnEmitter : MonoBehaviour
 	public bool canSpawnBoss = true;
 	public bool bossSpawned = false;
 
+    public int firstTierEnd = 5000;
+    public int secondTierEnd = 10000;
+    public int thirdTiernEnd = 15000;
+
 	//floats
 	public float bossCounter = 1;
 	public float secondsBetweenEnemies;
@@ -96,17 +100,17 @@ public class spawnEmitter : MonoBehaviour
 	//generates random numbers to call items from the arrays
 	void RandomGenerator () 
 	{//if statements to check the gamescore and spawn harder enemies
-		if (GameController.gameScore < 5000)
+		if (GameController.gameScore < firstTierEnd)
 		{
             selectTier = 1;
 		    randomSelector = Random.Range (0, firstTierWaves.Length); //selects for waves!!!
 		}
-		else if (GameController.gameScore >=5000 && GameController.gameScore < 10000)
+		else if (GameController.gameScore >=firstTierEnd && GameController.gameScore < secondTierEnd)
 		{
             selectTier = 2;
 			randomSelector = Random.Range (0, secondTierWaves.Length); //selects for waves!!!
 		}	
-		else if (GameController.gameScore >= 10000)
+		else if (GameController.gameScore >= secondTierEnd)
 		{
             selectTier = 3;
 			randomSelector = Random.Range (0, thirdTierWaves.Length); //selects for waves!!!
