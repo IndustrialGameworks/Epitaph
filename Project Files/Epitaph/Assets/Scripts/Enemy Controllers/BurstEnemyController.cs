@@ -80,7 +80,7 @@ public class BurstEnemyController : MonoBehaviour {
 			theText.text = "+" + (25 * GameController.multiplier);
 			isDestroyed = true;
 			GameController.multiplier += 1;
-			GameController.timer = 180.0f;
+			GameController.timer = GameController.resetTimer;
 			if (randomChance == 10) 
 			{
 				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);

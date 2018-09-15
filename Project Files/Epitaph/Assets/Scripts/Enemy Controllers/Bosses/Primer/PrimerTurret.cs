@@ -125,7 +125,7 @@ public class PrimerTurret : MonoBehaviour
             //pointsText.transform.SetParent (turretParent.transform);
             isDestroyed = true;
 			GameController.multiplier += 1;//adds 1 to the games multiplier and also resets the timer before the multiplier degrades.
-			GameController.timer = 180.0f;
+			GameController.timer = GameController.resetTimer;
 			Destroy (gameObject);//destroy this gameobject.
 		}
 	}

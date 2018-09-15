@@ -71,7 +71,7 @@ public class BeamDiamondController : MonoBehaviour {
 			pointsText.transform.SetParent (BeamDiamondParent.transform);
 			isDestroyed = true;
 			GameController.multiplier += 1;
-			GameController.timer = 180.0f;
+			GameController.timer = GameController.resetTimer;
 			if (randomChance == 10) 
 			{
 				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);

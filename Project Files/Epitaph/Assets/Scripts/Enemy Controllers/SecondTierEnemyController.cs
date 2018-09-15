@@ -61,7 +61,7 @@ public class SecondTierEnemyController : MonoBehaviour {
 			pointsText.transform.SetParent (enemyWaveController.transform);
 			isDestroyed = true;
 			GameController.multiplier += 1;
-			GameController.timer = 180.0f; 
+			GameController.timer = GameController.resetTimer; 
 			if (randomChance == 10) 
 			{
 				Instantiate (pickups [pickupNumber], gameObject.transform.position, Quaternion.identity);

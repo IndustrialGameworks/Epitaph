@@ -15,8 +15,8 @@ public class GameController : MonoBehaviour
     public int leaderboardScore;
 
     //Floats.
-    public static float timer = 180.0f;
-    public static float resetTimer = 180.0f;
+    public static float timer = 300.0f;
+    public static float resetTimer = 300.0f;
 
     //UI Elements.
     public Text score;
@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour
     public Button retryButton;
     public Button quitButton;
     public Button leaderboardButton;
+    public Image multiplierTimer;
 
     //Booleans.
     bool highscoreFlash = false;
@@ -73,6 +74,7 @@ public class GameController : MonoBehaviour
 		StartCoroutine ("initializeScores");
 		endGame ();
 		multiplierDegradation ();
+        timerBarControl();
 	}
 
 	void scoreTracking ()
@@ -122,6 +124,11 @@ public class GameController : MonoBehaviour
 	{
 		if (player.isDead == true)
 		{
+            leaderboardButton.gameObject.SetActive(true);
+            retryButton.gameObject.SetActive(true);
+            quitButton.gameObject.SetActive(true);
+            multi.gameObject.SetActive(false);
+            multiplierTimer.gameObject.SetActive(false);
             if (postScore == false)
             {
                 if (PlayGamesPlatform.Instance.localUser.authenticated)
@@ -136,10 +143,6 @@ public class GameController : MonoBehaviour
                 }
                 postScore = true;
             }
-            leaderboardButton.gameObject.SetActive(true);
-            retryButton.gameObject.SetActive (true);
-			quitButton.gameObject.SetActive (true);
-			multi.gameObject.SetActive(false);
 			if (newHighScore == true) 
 			{
 				scoreEnd.text = "New HighScore";
@@ -152,7 +155,7 @@ public class GameController : MonoBehaviour
 				highScoreEnd.text = highscore.text;
 				highscore.gameObject.SetActive (false);
 				scoreMultiplier.gameObject.SetActive (false);
-			}
+            }
 			else 
 			{
 				scoreEnd.text = score.text;
@@ -160,7 +163,7 @@ public class GameController : MonoBehaviour
 				highScoreEnd.text = highscore.text;
 				highscore.gameObject.SetActive (false);
 				scoreMultiplier.gameObject.SetActive (false);
-			}
+            }
 		}
 	}
 
@@ -237,6 +240,24 @@ public class GameController : MonoBehaviour
         else
         {
             Debug.Log("Cannot show leaderboard: not authenticated");
+        }
+    }
+
+    void timerBarControl()
+    {
+        float ratio = timer / resetTimer;
+        multiplierTimer.rectTransform.localScale = new Vector2(ratio, 1);
+        if (timer >= resetTimer)
+        {
+            timer = resetTimer;
+        }
+        if (multiplier == 1 || player.isDead == true)
+        {
+            multiplierTimer.gameObject.SetActive(false);
+        }
+        else
+        {
+            multiplierTimer.gameObject.SetActive(true);
         }
     }
 }

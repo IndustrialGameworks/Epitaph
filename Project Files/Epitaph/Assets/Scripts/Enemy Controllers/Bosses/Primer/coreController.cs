@@ -50,7 +50,7 @@ public class coreController : MonoBehaviour {
 			theText.text = "+" + (500 * GameController.multiplier);
 			isDestroyed = true;
 			GameController.multiplier += 1;
-			GameController.timer = 180.0f;
+			GameController.timer = GameController.resetTimer;
 			Destroy (gameObject);
 		}
 	}
