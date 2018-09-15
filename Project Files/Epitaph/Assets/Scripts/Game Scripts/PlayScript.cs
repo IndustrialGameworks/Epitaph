@@ -59,8 +59,11 @@ public class PlayScript : MonoBehaviour
         {
             PlayerPrefs.SetFloat("SFXVolume", 1);
         }
-        musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 1);
-        SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1);
+        if (musicSlider != null && SFXSlider != null)
+        {
+            musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 1);
+            SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1);
+        }
 
         cb2.normalColor = Checked;//changes the normal color of the cb2 colorblock to be grey.
 		Debug.Log(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());//shows the version number which is set at the top of this screen.
