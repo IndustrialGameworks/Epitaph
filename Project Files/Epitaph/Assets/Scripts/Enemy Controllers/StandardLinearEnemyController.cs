@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class StandardLinearEnemyController : MonoBehaviour {
 
-	public int health = 400;
-
-	//Movement Variables
-	public float movementSpeed = 3;
-	public bool edgeBounce = false;
-	bool moveDown; // currently assigns random boolean to whether enemy starts out moving up or down.
+	public int health = 2000;
 
 	//Attack Variables
 	public float delayBetweenProjectiles = 1.5f;
@@ -17,45 +12,48 @@ public class StandardLinearEnemyController : MonoBehaviour {
 	public GameObject projectile1;
 	public GameObject projectile2;
 
-	// Use this for initialization
-	void Start () {
-		moveDown = (Random.value > 0.5f);
+    //text variables
+    public GameObject pointsText;
+    TextMesh theText;
+    public bool isDestroyed = false;
+    public GameObject linearParent;
+
+    //color variables
+    Color hit = new Color(145f / 255f, 50f / 255f, 50f / 255f, 1);
+    Color standard = Color.white;
+    SpriteRenderer linearSprite;
+    public GameObject deathParticle;
+
+    // Use this for initialization
+    void Start ()
+    {
+        linearSprite = GetComponent<SpriteRenderer>();//gets the sprite renderer for this gameobject.
+        theText = pointsText.GetComponent<TextMesh>();//gets the text mesh of this text object.
 		StartCoroutine ("Attack"); //starts a coroutine running for firing projectiles
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		Movement ();
-		//Status ();
-	}
-
-
-	void Movement () {
-		transform.Translate (Vector2.left * movementSpeed * Time.deltaTime);
-
-		if (edgeBounce == true) {
-
-			if (transform.position.y <= -4.2f) {
-				moveDown = false;
-			}
-			if (transform.position.y >= 4.2f) {
-				moveDown = true;
-			}
-
-			if (moveDown == true) {
-				transform.Translate (Vector2.down * movementSpeed * Time.deltaTime);
-			}
-			if (moveDown == false) {
-				transform.Translate (Vector2.up * movementSpeed * Time.deltaTime);
-			}
-		}
+	void Update ()
+    {
+		Status ();
 	}
 
 	void Status () {
-		if (health <= 0) {
-			Destroy (gameObject);
-			GameController.gameScore += 10;
-		}
+		if (health <= 0)
+        {
+
+            GameController.gameScore += (150 * GameController.multiplier);//returns score to the game controller.
+            theText.text = "+" + (150 * GameController.multiplier);//edits the text of this textmesh.
+            pointsText.transform.SetParent(linearParent.transform);
+            isDestroyed = true;
+            GameController.multiplier += 1;//adds 1 to the games multiplier and also resets the timer before the multiplier degrades.
+            GameController.timer = GameController.resetTimer;
+            if (deathParticle != null)
+            {
+                Instantiate(deathParticle, transform.position, Quaternion.identity);
+            }
+            Destroy(gameObject);//destroy this gameobject.
+        }
 	}
 
 	IEnumerator Attack () {
@@ -74,10 +72,18 @@ public class StandardLinearEnemyController : MonoBehaviour {
 		if (other.tag == "PlayerProjectile") {
 			health -= 50;
 			Destroy (other.gameObject);
-		}
+            StartCoroutine("changeColor");//run this co routine.
+        }
 	}
 
-	void OnBecameInvisible ()
+    IEnumerator changeColor()//changes the color of the sprite renderer on hit.
+    {
+        linearSprite.color = hit;//change to red.
+        yield return new WaitForSeconds(0.125f);//wait this long.
+        linearSprite.color = standard;//return to normal.
+    }
+
+    void OnBecameInvisible ()
 	{
 		Destroy (gameObject);
 	}

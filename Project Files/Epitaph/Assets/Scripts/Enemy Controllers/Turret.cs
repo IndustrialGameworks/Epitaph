@@ -23,6 +23,7 @@ public class Turret : MonoBehaviour
     public GameObject projectile;
     public GameObject turretParent;
     GameObject spawnedProjectile;
+    public GameObject deathParticle;
 
     //Vector2.
     public Vector2 centerOfMass;
@@ -120,12 +121,17 @@ public class Turret : MonoBehaviour
 		if (health <= 0)
         {
 
-			GameController.gameScore += (250 * GameController.multiplier);//returns score to the game controller.
-			theText.text = "+" + (250 * GameController.multiplier);//edits the text of this textmesh.
+			GameController.gameScore += (150 * GameController.multiplier);//returns score to the game controller.
+			theText.text = "+" + (150 * GameController.multiplier);//edits the text of this textmesh.
             pointsText.transform.SetParent (turretParent.transform);
             isDestroyed = true;
 			GameController.multiplier += 1;//adds 1 to the games multiplier and also resets the timer before the multiplier degrades.
 			GameController.timer = GameController.resetTimer;
+            if (deathParticle != null)
+            {
+                Instantiate(deathParticle, turretParent.transform.position, Quaternion.identity);
+            }
+            Destroy(transform.parent.gameObject);
 			Destroy (gameObject);//destroy this gameobject.
 		}
 	}

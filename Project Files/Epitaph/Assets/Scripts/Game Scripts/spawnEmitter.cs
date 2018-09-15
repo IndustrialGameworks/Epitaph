@@ -19,10 +19,13 @@ public class spawnEmitter : MonoBehaviour
 	//floats
 	public float bossCounter = 1;
 	public float secondsBetweenEnemies;
+    public float secondsBetweenLinearEnemies;
 	public float secondsBetweenSpecialEnemies;
 	public float secondsBetweenPickups = 1f;
 	public float secondsBeforeBegin = 4f;
-    private float maxX;
+    private float randomY;
+    public float randomYSpawn;
+    private float maxX, maxY, minY;
 
     //integers
     int randomSelector = 0;
@@ -37,6 +40,7 @@ public class spawnEmitter : MonoBehaviour
 	int topBottomRandomEmitterNumber;
 	int randomEmitterSpawn;
     int selectTier;
+    int linearSelector;
 
     //Array that holds enemy gameobject prefab references
     public GameObject[] firstTierWaves;
@@ -45,6 +49,7 @@ public class spawnEmitter : MonoBehaviour
     public GameObject [] enemy;
 	public GameObject [] specialEnemy;
 	public GameObject [] pickup;
+    public GameObject [] linearEnemies;
 	public GameObject boss1;
 	public GameObject currentBoss;
 
@@ -60,6 +65,7 @@ public class spawnEmitter : MonoBehaviour
 
     //vectors for screen boundaries.
     Vector2 topCorner;
+    Vector2 bottomCorner;
 
 
     // Use this for initialization
@@ -70,6 +76,7 @@ public class spawnEmitter : MonoBehaviour
 		secondCurrentEmitter = emitters [2]; //needs to be assigned on start
 		StartCoroutine ("Initialization");
         topCorner = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+        bottomCorner = Camera.main.ScreenToViewportPoint(new Vector2(0, 0));
         setBounds();
         Vector2 startPosition = new Vector2(maxX + 1, transform.position.y);
         transform.position = startPosition;
@@ -86,6 +93,8 @@ public class spawnEmitter : MonoBehaviour
     {
         //takes the minimum and maximum x and y values from the top and bottom corner vectors.
         maxX = topCorner.x;
+        maxY = topCorner.y;
+        minY = bottomCorner.y;
     }
 
     //gets the details of array length at startup and then saves them to variables for use by the random generators
@@ -116,7 +125,8 @@ public class spawnEmitter : MonoBehaviour
 			randomSelector = Random.Range (0, thirdTierWaves.Length); //selects for waves!!!
 		}
 
-		//generates randoms	
+        //generates randoms	
+        linearSelector = Random.Range(0, linearEnemies.Length);
 		topBottomRandomEmitterNumber = Random.Range (0, topEmitterArraySize);
 		currentRandomPickup =  Random.Range (0, pickupArraySize);
 		currentRandomSpecialEnemy = Random.Range (0, specialEnemyArraySize);
@@ -137,6 +147,7 @@ public class spawnEmitter : MonoBehaviour
 	{
 		yield return new WaitForSeconds (secondsBeforeBegin);
 		StartCoroutine ("SpawnPickup");
+        StartCoroutine("SpawnLinear");
         StartCoroutine("SpawnEnemy");
 		StartCoroutine ("SpawnSpecialEnemy");
     }
@@ -182,13 +193,26 @@ public class spawnEmitter : MonoBehaviour
 		}
 	}
 
+    IEnumerator SpawnLinear()
+    {
+        while (true)
+        {
+            randomY = Random.Range(0, maxY * 2);
+            randomYSpawn = randomY - maxY;
+            Vector2 linearPosition = new Vector2(maxX + 1, randomYSpawn);
+            Instantiate(linearEnemies[linearSelector], linearPosition, Quaternion.identity);
+            yield return new WaitForSeconds(secondsBetweenLinearEnemies);
+        }
+    }
+
 	void boss ()
 	{
 		if (GameController.gameScore >= (bossCounter * 15000) && canSpawnBoss == true) 
 		{
 			StopCoroutine ("SpawnEnemy");
 			StopCoroutine ("SpawnSpecialEnemy");
-			currentBoss = Instantiate (boss1, emitters [4].transform.position, Quaternion.identity) as GameObject;
+            StopCoroutine("SpawnLinear");
+            currentBoss = Instantiate (boss1, emitters [4].transform.position, Quaternion.identity) as GameObject;
 			canSpawnBoss = false;
 			bossSpawned = true;
 			bossCounter++;
@@ -197,7 +221,8 @@ public class spawnEmitter : MonoBehaviour
 		{
 			StartCoroutine ("SpawnEnemy");
 			StartCoroutine ("SpawnSpecialEnemy");
-			bossSpawned = false;
+            StartCoroutine("SpawnLinear");
+            bossSpawned = false;
 			canSpawnBoss = true;
 		}
 	}
