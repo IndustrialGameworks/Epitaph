@@ -19,9 +19,9 @@ public class Turret : MonoBehaviour
     public GameObject emitter;
     public GameObject origin;
     public GameObject player;
-    //public GameObject pointsText;
+    public GameObject pointsText;
     public GameObject projectile;
-    //public GameObject turretParent;
+    public GameObject turretParent;
     GameObject spawnedProjectile;
 
     //Vector2.
@@ -42,7 +42,7 @@ public class Turret : MonoBehaviour
 	void Start ()
     {
 		turretSprite = GetComponent<SpriteRenderer> ();//gets the sprite renderer for this gameobject.
-		//theText = pointsText.GetComponent<TextMesh>();//gets the text mesh of this text object.
+		theText = pointsText.GetComponent<TextMesh>();//gets the text mesh of this text object.
 		StartCoroutine ("Attack");//start the attack coroutine for the start.
 	}
 	
@@ -52,7 +52,7 @@ public class Turret : MonoBehaviour
 		player = GameObject.FindGameObjectWithTag ("Player"); //has to be be called on update during testing, as there is no player at the time this instance starts.
 		RotateToTarget();
 		centerOfMass = origin.transform.position;
-		//Status ();
+		Status ();
 
 
 	}
@@ -122,10 +122,10 @@ public class Turret : MonoBehaviour
 
 			GameController.gameScore += (250 * GameController.multiplier);//returns score to the game controller.
 			theText.text = "+" + (250 * GameController.multiplier);//edits the text of this textmesh.
-            //pointsText.transform.SetParent (turretParent.transform);
+            pointsText.transform.SetParent (turretParent.transform);
             isDestroyed = true;
 			GameController.multiplier += 1;//adds 1 to the games multiplier and also resets the timer before the multiplier degrades.
-			GameController.timer = 180.0f;
+			GameController.timer = GameController.resetTimer;
 			Destroy (gameObject);//destroy this gameobject.
 		}
 	}

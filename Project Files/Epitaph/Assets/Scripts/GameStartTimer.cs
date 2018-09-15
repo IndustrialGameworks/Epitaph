@@ -27,7 +27,7 @@ public class GameStartTimer : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		
+        audioSource.volume = PlayerPrefs.GetFloat("SFXVolume", 1);
 	}
 
 	IEnumerator Timer ()
