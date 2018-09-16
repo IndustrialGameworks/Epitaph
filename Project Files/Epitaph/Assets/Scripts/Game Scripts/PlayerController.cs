@@ -80,11 +80,11 @@ public class PlayerController : MonoBehaviour
 			controllerX = minX + 0.001f;
 			transform.position = new Vector2 (controllerX, controllerY);
 		} 
-		else if (transform.position.x >= maxX) 
-		{
-			controllerX = maxX - 0.001f;
-			transform.position = new Vector2 (controllerX, controllerY);
-		} 
+		//else if (transform.position.x >= maxX) 
+		//{
+		//	controllerX = maxX - 0.001f;
+		//	transform.position = new Vector2 (controllerX, controllerY);
+		//} 
 		else if (transform.position.y <= minY) 
 		{
 			controllerY = minY + 0.001f;
