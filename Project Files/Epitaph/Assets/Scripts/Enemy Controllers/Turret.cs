@@ -10,7 +10,7 @@ public class Turret : MonoBehaviour
 	public int health = 1000;
     
     //Floats.
-	public float rotationSpeed = 5;
+	public float rotationSpeed = 3;
 	public float volleySeperation = 0.3f;
 	public float delayBetweenProjectiles = 4;
 	public float delayBeforeStart = 0.5f;

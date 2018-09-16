@@ -50,6 +50,10 @@ public class spawnEmitter : MonoBehaviour
 	public GameObject [] specialEnemy;
 	public GameObject [] pickup;
     public GameObject [] linearEnemies;
+    public GameObject[] turrets;
+
+    public float timeBetweenTurrets = 4;
+
 	public GameObject boss1;
 	public GameObject currentBoss;
 
@@ -148,6 +152,7 @@ public class spawnEmitter : MonoBehaviour
 		yield return new WaitForSeconds (secondsBeforeBegin);
 		StartCoroutine ("SpawnPickup");
         StartCoroutine("SpawnLinear");
+        StartCoroutine("SpawnTurret");
         StartCoroutine("SpawnEnemy");
 		StartCoroutine ("SpawnSpecialEnemy");
     }
@@ -205,7 +210,24 @@ public class spawnEmitter : MonoBehaviour
         }
     }
 
-	void boss ()
+    IEnumerator SpawnTurret()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(timeBetweenTurrets);
+            int controlRandom = Random.Range(0, 2);
+            if (controlRandom == 0)
+            {
+                Instantiate(turrets[0], emitters[0].transform.position, Quaternion.identity);
+            }
+            if (controlRandom == 1)
+            {
+                Instantiate(turrets[1], emitters[8].transform.position, Quaternion.identity);
+            }
+        }
+    }
+
+    void boss ()
 	{
 		if (GameController.gameScore >= (bossCounter * 15000) && canSpawnBoss == true) 
 		{
