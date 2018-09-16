@@ -42,8 +42,8 @@ public class StandardLinearEnemyController : MonoBehaviour {
 		if (health <= 0)
         {
 
-            GameController.gameScore += (150 * GameController.multiplier);//returns score to the game controller.
-            theText.text = "+" + (150 * GameController.multiplier);//edits the text of this textmesh.
+            GameController.gameScore += (50 * GameController.multiplier);//returns score to the game controller.
+            theText.text = "+" + (50 * GameController.multiplier);//edits the text of this textmesh.
             pointsText.transform.SetParent(linearParent.transform);
             isDestroyed = true;
             GameController.multiplier += 1;//adds 1 to the games multiplier and also resets the timer before the multiplier degrades.
