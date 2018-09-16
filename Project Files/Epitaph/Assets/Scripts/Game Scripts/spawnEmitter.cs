@@ -234,6 +234,7 @@ public class spawnEmitter : MonoBehaviour
 			StopCoroutine ("SpawnEnemy");
 			StopCoroutine ("SpawnSpecialEnemy");
             StopCoroutine("SpawnLinear");
+            StopCoroutine("SpawnTurret");
             currentBoss = Instantiate (boss1, emitters [4].transform.position, Quaternion.identity) as GameObject;
 			canSpawnBoss = false;
 			bossSpawned = true;
@@ -244,6 +245,7 @@ public class spawnEmitter : MonoBehaviour
 			StartCoroutine ("SpawnEnemy");
 			StartCoroutine ("SpawnSpecialEnemy");
             StartCoroutine("SpawnLinear");
+            StartCoroutine("SpawnTurret");
             bossSpawned = false;
 			canSpawnBoss = true;
 		}
