@@ -81,7 +81,7 @@ public class Turret : MonoBehaviour
 
 	IEnumerator Attack ()
     {
-		while (true)
+		while (true && transform.position.x > - 6.5f)
         {
 			yield return new WaitForSeconds (delayBeforeStart);//wait for this amount of time.
 			spawnedProjectile = Instantiate (projectile, emitter.transform.position, Quaternion.identity) as GameObject; //spawns projectile, returns gameObject

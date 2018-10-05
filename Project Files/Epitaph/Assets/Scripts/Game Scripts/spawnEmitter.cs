@@ -152,9 +152,12 @@ public class spawnEmitter : MonoBehaviour
 		yield return new WaitForSeconds (secondsBeforeBegin);
 		StartCoroutine ("SpawnPickup");
         StartCoroutine("SpawnLinear");
-        StartCoroutine("SpawnTurret");
+        yield return new WaitForSeconds(20); //added for balancing
         StartCoroutine("SpawnEnemy");
-		StartCoroutine ("SpawnSpecialEnemy");
+        yield return new WaitForSeconds(10); //added for balancing
+        StartCoroutine ("SpawnSpecialEnemy");
+        yield return new WaitForSeconds(10); //added for balancing
+        StartCoroutine("SpawnTurret");
     }
 
     IEnumerator SpawnEnemy ()
